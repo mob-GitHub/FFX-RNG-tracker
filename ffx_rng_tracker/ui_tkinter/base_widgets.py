@@ -63,14 +63,27 @@ class ScrollableText(tk.Frame):
         """
         if text is None:
             text = self.text.get('1.0', 'end')
-        spans: list[str] = []
-        for i, line in enumerate(text.splitlines(), 1):
-            for m in pattern.finditer(line):
-                start, end = m.span()
-                spans.extend((f'{i}.{start}', f'{i}.{end}'))
-        if not spans:
+        indexes: list[int] = []
+        for m in pattern.finditer(text):
+            indexes.extend(m.span())
+        if not indexes:
             return
-        self.text.tag_add(tag_name, *spans)
+        post = text
+        line = 1
+        char = 0
+        last_index = 0
+        str_indexes: list[str] = []
+        for index in indexes:
+            pre, post = post[:index - last_index], post[index - last_index:]
+            last_index = index
+            new_lines = pre.count('\n')
+            if new_lines > 0:
+                line += new_lines
+                char = len(pre.rsplit('\n', 2)[-1])
+            else:
+                char += len(pre)
+            str_indexes.append(f'{line}.{char}')
+        self.text.tag_add(tag_name, *str_indexes)
 
     def set(self, text: str) -> None:
         """Replaces the previous text and scrolls back to

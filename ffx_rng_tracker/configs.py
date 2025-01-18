@@ -148,7 +148,7 @@ class Configs:
             if not pattern.startswith('\'') or not pattern.endswith('\''):
                 continue
             try:
-                regex_pattern = re.compile(pattern[1:-1])
+                regex_pattern = re.compile(pattern[1:-1], re.MULTILINE)
             except re.error:
                 regex_pattern = REGEX_NEVER_MATCH
             if len(fg) == 7 and fg[0] == '#':
