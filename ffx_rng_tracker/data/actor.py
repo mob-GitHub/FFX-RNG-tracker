@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Protocol, Self
+from typing import Protocol
 
 from .actions import Action
 from .autoabilities import (AEON_RIBBON_IMMUNITIES, AUTO_STATUSES,
@@ -18,13 +18,6 @@ from .statuses import StatusApplication
 
 
 class Actor(Protocol):
-    index: int
-    max_hp: int
-    current_hp: int
-    max_mp: int
-    current_mp: int
-    base_ctb: int
-    ctb: int
     armored: bool
     immune_to_damage: bool
     immune_to_physical_damage: bool
@@ -43,9 +36,36 @@ class Actor(Protocol):
     weapon_elements: list[Element]
     weapon_statuses: list[StatusApplication]
     last_action: Action | None
-    provoker: Self | None
-    last_attacker: Self | None
-    last_targets: list[Self]
+    provoker: "Actor | None"
+    last_attacker: "Actor | None"
+    last_targets: "list[Actor]"
+
+    @property
+    def index(self) -> int: ...
+    @property
+    def max_hp(self) -> int: ...
+    @property
+    def current_hp(self) -> int: ...
+    @current_hp.setter
+    def current_hp(self, value: int) -> None: ...
+    @property
+    def max_mp(self) -> int: ...
+    @property
+    def current_mp(self) -> int: ...
+    @current_mp.setter
+    def current_mp(self, value: int) -> None: ...
+    @property
+    def max_od(self) -> int: ...
+    @property
+    def current_od(self) -> int: ...
+    @current_od.setter
+    def current_od(self, value: int) -> None: ...
+    @property
+    def base_ctb(self) -> int: ...
+    @property
+    def ctb(self) -> int: ...
+    @ctb.setter
+    def ctb(self, value: int) -> None: ...
 
     def set_stat(self, stat: Stat, value: int) -> None:
         """Sets the stat to the value, clamping to the
@@ -84,7 +104,7 @@ class CharacterActor:
         self.reset()
 
     def __str__(self) -> str:
-        return self.character
+        return f'{self.character}'
 
     def reset(self) -> None:
         self.stats.update(self.defaults.stats)
@@ -93,6 +113,7 @@ class CharacterActor:
         self.buffs.clear()
         self._current_hp = self.stats[Stat.HP]
         self._current_mp = self.stats[Stat.MP]
+        self._current_od = 0
         self.statuses.clear()
         self.in_crit = False
         self._weapon = self.defaults.weapon.copy()
@@ -171,9 +192,23 @@ class CharacterActor:
         return self._current_mp
 
     @current_mp.setter
-    def current_mp(self, value) -> None:
+    def current_mp(self, value: int) -> None:
         value = min(max(value, 0), self.max_mp)
         self._current_mp = value
+
+    @property
+    def max_od(self) -> int:
+        if self.index < 8:
+            return 100
+        return 20
+
+    @property
+    def current_od(self) -> int:
+        return self._current_od
+
+    @current_od.setter
+    def current_od(self, value: int) -> None:
+        self._current_od = min(max(0, value), self.max_od)
 
     @property
     def base_ctb(self) -> int:
@@ -184,7 +219,7 @@ class CharacterActor:
         return self._ctb
 
     @ctb.setter
-    def ctb(self, value) -> None:
+    def ctb(self, value: int) -> None:
         self._ctb = max(0, value)
 
     @property
@@ -192,7 +227,7 @@ class CharacterActor:
         return self._ap
 
     @ap.setter
-    def ap(self, value) -> None:
+    def ap(self, value: int) -> None:
         self._ap = max(0, value)
 
     @property
@@ -315,6 +350,7 @@ class MonsterActor:
         self.buffs.clear()
         self._current_hp = self.stats[Stat.HP]
         self._current_mp = self.stats[Stat.MP]
+        self._current_od = 0
         self.statuses.clear()
         self.elemental_affinities.update(self.monster.elemental_affinities)
         self.status_resistances.update(self.monster.status_resistances)
@@ -369,9 +405,21 @@ class MonsterActor:
         return self._current_mp
 
     @current_mp.setter
-    def current_mp(self, value) -> None:
+    def current_mp(self, value: int) -> None:
         value = min(max(value, 0), self.max_mp)
         self._current_mp = value
+
+    @property
+    def max_od(self) -> int:
+        return 100
+
+    @property
+    def current_od(self) -> int:
+        return self._current_od
+
+    @current_od.setter
+    def current_od(self, value: int) -> None:
+        self._current_od = min(max(0, value), 100)
 
     @property
     def base_ctb(self) -> int:
@@ -382,5 +430,5 @@ class MonsterActor:
         return self._ctb
 
     @ctb.setter
-    def ctb(self, value) -> None:
+    def ctb(self, value: int) -> None:
         self._ctb = max(0, value)

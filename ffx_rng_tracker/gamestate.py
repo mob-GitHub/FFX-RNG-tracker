@@ -155,6 +155,7 @@ class GameState:
             actor.ctb = 0
             actor.statuses.clear()
             actor.buffs.clear()
+            actor.last_action = None
         self.monster_party.clear()
 
     def clean_equipment_inventory(self) -> None:
