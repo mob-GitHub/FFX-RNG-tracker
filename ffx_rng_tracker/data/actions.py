@@ -3,9 +3,10 @@ from dataclasses import dataclass
 from itertools import count
 
 from ..utils import add_bytes, open_cp1252, stringify
-from .constants import (COUNTER_TARGET_TYPES, HIT_CHANCE_FORMULA_TABLE, Buff,
-                        Character, DamageFormula, DamageType, Element,
-                        HitChanceFormula, MonsterSlot, Status, TargetType)
+from .constants import (COUNTER_TARGET_TYPES, HIT_CHANCE_FORMULA_TABLE,
+                        SUBMENUS, Buff, Character, DamageFormula, DamageType,
+                        Element, HitChanceFormula, MonsterSlot, Status,
+                        SubMenu, TargetType)
 from .file_functions import get_resource_path
 from .statuses import NO_RNG_STATUSES, StatusApplication
 from .text_characters import bytes_to_string
@@ -15,6 +16,8 @@ from .text_characters import bytes_to_string
 class Action:
     name: str
     description: str
+    submenu: SubMenu
+    subsubmenu: SubMenu | None
     is_character_action: bool
     exclusive_user: Character | None
     can_use_in_combat: bool
@@ -93,6 +96,12 @@ def parse_actions_file(file_path: str) -> list[Action]:
         name = bytes_to_string(string_data, add_bytes(*action[0:2]))
 
         description = bytes_to_string(string_data, add_bytes(*action[8:10]))
+
+        submenu = SUBMENUS[action[24]]
+        if action[23] != action[24]:
+            subsubmenu = SUBMENUS.get(action[23])
+        else:
+            subsubmenu = None
 
         is_character_action = len(action) == 96
 
@@ -204,6 +213,8 @@ def parse_actions_file(file_path: str) -> list[Action]:
         action = Action(
             name=name,
             description=description,
+            submenu=submenu,
+            subsubmenu=subsubmenu,
             is_character_action=is_character_action,
             exclusive_user=exclusive_user,
             can_use_in_combat=can_use_in_combat,

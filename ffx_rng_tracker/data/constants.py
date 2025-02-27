@@ -205,6 +205,27 @@ class HitChanceFormula(StrEnum):
     USE_ACCURACY_x_0_5 = 'Accuracy * 0.5'
 
 
+class SubMenu(StrEnum):
+    DEFAULT = 'Default'
+    BLK_MAGIC = 'Blk Magic'
+    WHT_MAGIC = 'Wht Magic'
+    SKILL = 'Skill'
+    OVERDRIVE = 'Overdrive'
+    SUMMON = 'Summon'
+    ITEM = 'Item'
+    WEAPON = 'Weapon'
+    ESCAPE = 'Escape'
+    SWITCH = 'Switch'
+    LEFT = 'Left'
+    RIGHT = 'Right'
+    SPECIAL = 'Special'
+    ARMOR = 'Armor'
+    USE = 'Use'
+    MIX = 'Mix'
+    GIL_CHAR = 'Gil (Bribe/Spare Change)'
+    GIL_YOJIMBO = 'Gil (Yojimbo)'
+
+
 class MonsterSlot(IntEnum):
     MONSTER_1 = 0
     MONSTER_2 = 1
@@ -711,4 +732,24 @@ COUNTER_TARGET_TYPES = {
     TargetType.COUNTER_CHARACTERS_PARTY,
     TargetType.COUNTER_ALL,
     TargetType.COUNTER_LAST_TARGET,
+}
+SUBMENUS = {
+    0: SubMenu.DEFAULT,
+    1: SubMenu.BLK_MAGIC,
+    2: SubMenu.WHT_MAGIC,
+    3: SubMenu.SKILL,
+    4: SubMenu.OVERDRIVE,
+    5: SubMenu.SUMMON,
+    6: SubMenu.ITEM,
+    7: SubMenu.WEAPON,
+    8: SubMenu.ESCAPE,
+    10: SubMenu.SWITCH,
+    12: SubMenu.LEFT,
+    13: SubMenu.RIGHT,
+    14: SubMenu.SPECIAL,
+    15: SubMenu.ARMOR,
+    17: SubMenu.USE,
+    20: SubMenu.MIX,
+    21: SubMenu.GIL_CHAR,
+    22: SubMenu.GIL_YOJIMBO,
 }

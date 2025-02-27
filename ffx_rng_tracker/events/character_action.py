@@ -9,7 +9,8 @@ from ..data.autoabilities import (DEFENSE_BONUSES, MAGIC_BONUSES,
 from ..data.constants import (ELEMENTAL_AFFINITY_MODIFIERS, HIT_CHANCE_TABLE,
                               Autoability, Buff, Character, DamageFormula,
                               DamageType, Element, ElementalAffinity,
-                              HitChanceFormula, Stat, Status, TargetType)
+                              HitChanceFormula, Stat, Status, SubMenu,
+                              TargetType)
 from ..data.statuses import NO_RNG_STATUSES, NUL_STATUSES
 from .main import Event
 
@@ -19,7 +20,7 @@ class DamageInstance:
     damage: int = 0
     crit: bool = False
     damage_rng: int = 0
-    pool: Literal['HP'] | Literal['MP'] | Literal['CTB'] = 'HP'
+    pool: Literal['HP', 'MP', 'CTB'] = 'HP'
 
     def __str__(self) -> str:
         string = f'[{self.damage_rng}/31] {self.damage} {self.pool}'
@@ -47,15 +48,17 @@ class ActionResult:
 class CharacterAction(Event):
     user: Actor
     action: Action
-    target: TargetType | Actor | None
+    target: list[Actor] | TargetType | Actor | None
     od_time_remaining: int = 0
     od_n_of_hits: int = 1
 
     def __post_init__(self) -> None:
         if not self.action.is_counter:
             self.gamestate.process_start_of_turn(self.user)
+        self.mp_cost = self._get_mp_cost()
         self.targets = self._get_targets()
         self.results = [ActionResult() for _ in self.targets]
+        self.reflected_targets: dict[int, Actor] = {}
         self._get_hits()
         self._get_damages()
         if not self.action.removes_statuses:
@@ -78,7 +81,7 @@ class CharacterAction(Event):
 
     def __str__(self) -> str:
         actions = []
-        for target, result in zip(self.targets, self.results):
+        for i, (target, result) in enumerate(zip(self.targets, self.results)):
             if not result.hit:
                 actions.append(f'{target} -> Miss')
                 continue
@@ -109,7 +112,10 @@ class CharacterAction(Event):
                 action += ' '.join(buffs)
             if not action:
                 action = ' Does nothing'
-            actions.append(f'{target} ->{action}')
+            action = f'{target} ->{action}'
+            if i in self.reflected_targets:
+                action = f'{self.reflected_targets[i]} (reflected) -> {action}'
+            actions.append(action)
         string = f'{self.user} -> {self.action} [{self.ctb}]: '
         if actions:
             string += f'\n{' ' * len(string)}'.join(actions)
@@ -138,11 +144,17 @@ class CharacterAction(Event):
         elements = set(self.action.elements)
         if self.action.uses_weapon_properties:
             elements.update(self.user.weapon_elements)
-        nul_statuses: set[Status] = {NUL_STATUSES.get(element, None)
-                                     for element in elements}
-        nul_statuses.discard(None)
+        nul_statuses: set[Status] = set()
+        for element in elements:
+            if element in NUL_STATUSES:
+                nul_statuses.add(NUL_STATUSES[element])
 
-        for target, result in zip(self.targets, self.results):
+        for i, (target, result) in enumerate(zip(self.targets, self.results)):
+            if (self.action.affected_by_reflect
+                    and Status.REFLECT in target.statuses):
+                self.reflected_targets[i] = target
+                new_target = self._get_new_reflect_target(target)
+                self.targets[i] = new_target
             if (self.action.misses_if_target_alive
                     and Status.DEATH not in target.statuses
                     and Status.ZOMBIE not in target.statuses):
@@ -335,8 +347,7 @@ class CharacterAction(Event):
                     result.ctb.damage = get_damage(
                         self.user, self.action, target, result.ctb.damage_rng,
                         result.ctb.crit, self.od_time_remaining)
-                    result.ctb.damage *= -1
-                    target.ctb -= result.ctb.damage
+                    target.ctb += result.ctb.damage
             if not discard_damage and self.action.drains:
                 self.user.current_hp += result.hp.damage
                 self.user.current_mp += result.mp.damage
@@ -476,6 +487,8 @@ class CharacterAction(Event):
         else:
             n_of_hits = self.action.n_of_hits
         match self.target:
+            case list() if self.target:
+                return self.target
             case TargetType.SELF | TargetType.COUNTER_SELF:
                 possible_targets = [self.user]
             case TargetType.RANDOM_CHARACTER:
@@ -536,6 +549,19 @@ class CharacterAction(Event):
         targets.sort(key=lambda t: t.index)
         return targets
 
+    def _get_new_reflect_target(self, target: Actor) -> Actor:
+        if hasattr(target, 'monster'):
+            possible_targets = self._get_possible_character_targets()
+        else:
+            possible_targets = self._get_possible_monster_targets()
+        if len(possible_targets) == 0:
+            return self.gamestate.characters[Character.UNKNOWN]
+        elif len(possible_targets) == 1:
+            return possible_targets[0]
+        target_rng = self._advance_rng(6)
+        target_index = target_rng % len(possible_targets)
+        return possible_targets[target_index]
+
     def _get_ctb(self) -> int:
         rank = self.action.rank
         ctb = self.user.base_ctb * rank
@@ -545,6 +571,21 @@ class CharacterAction(Event):
             ctb = ctb * 2
         self.user.ctb += ctb
         return ctb
+
+    def _get_mp_cost(self) -> int:
+        if self.action.mp_cost == 0 or Status.MP_0 in self.user.statuses:
+            mp_cost = 0
+        elif Autoability.ONE_MP_COST in self.user.autoabilities:
+            mp_cost = 1
+        else:
+            mp_cost = self.action.mp_cost
+            if (self.action.submenu in (SubMenu.BLK_MAGIC, SubMenu.WHT_MAGIC)
+                    and Autoability.MAGIC_BOOSTER in self.user.autoabilities):
+                mp_cost *= 2
+            if Autoability.HALF_MP_COST in self.user.autoabilities:
+                mp_cost //= 2
+        self.user.current_mp -= mp_cost
+        return mp_cost
 
 
 def get_element_mods(elemental_affinities: dict[Element, ElementalAffinity],
@@ -608,13 +649,15 @@ def get_damage(
         damage_rng: int = 0,
         crit: bool = False,
         od_time_remaining: int = 0,
-        pool: Literal['hp'] | Literal['mp'] = '',
+        pool: Literal['hp', 'mp'] = 'hp',
         ) -> int:
     if target.immune_to_damage:
         return 0
-    if target.immune_to_physical_damage and action.damage_type.PHYSICAL:
+    if (target.immune_to_physical_damage
+            and action.damage_type is DamageType.PHYSICAL):
         return 0
-    if target.immune_to_magical_damage and action.damage_type.MAGICAL:
+    if (target.immune_to_magical_damage
+            and action.damage_type is DamageType.MAGICAL):
         return 0
     if action.uses_weapon_properties:
         base_damage = user.base_weapon_damage
