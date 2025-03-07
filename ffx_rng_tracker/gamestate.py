@@ -22,6 +22,8 @@ class GameState:
         self._rng_tracker = rng_tracker
         self._default_party = Character.TIDUS, Character.AURON
         self.characters = self._get_characters()
+        self.bonus_aeon_stats = {character: {stat: 0 for stat in Stat}
+                                 for character in tuple(Character)[7:]}
         self.zone_encounters_counts: dict[str, int] = {}
         self.inventory = Inventory()
         self.equipment_inventory: list[Equipment | None] = []
@@ -93,17 +95,15 @@ class GameState:
                      for stat in yuna_stats}
         enc_power_base = calculate_power_base(enc_stats)
 
-        # TODO
-        # add bonus aeon stats to gamestate
-        bonus_stats: dict[Stat, int] = {}
-
         for aeon, stats_constants in AEONS_STATS_CONSTANTS.items():
+            bonus_stats = self.bonus_aeon_stats[aeon]
             aeon = self.characters[aeon]
-            aeon.set_stat(Stat.LUCK, yuna_stats[Stat.LUCK])
+            aeon.set_stat(
+                Stat.LUCK, yuna_stats[Stat.LUCK] + bonus_stats[Stat.LUCK])
             for stat, (x, y) in stats_constants.items():
                 value = (yuna_stats[stat] * x // 100) + int(power_base * y)
                 enc_value = (enc_stats[stat] * x // 100) + int(enc_power_base * y)
-                value = max(value, enc_value) + bonus_stats.get(stat, 0)
+                value = max(value, enc_value) + bonus_stats[stat]
                 aeon.set_stat(stat, value)
 
     def process_start_of_turn(self, actor: Actor) -> None:
@@ -146,8 +146,6 @@ class GameState:
         # some point
         self.process_end_of_encounter()
 
-        self.calculate_aeon_stats()
-
     def process_end_of_encounter(self) -> None:
         for actor in self.characters.values():
             if Status.DEATH in actor.statuses:
@@ -157,6 +155,7 @@ class GameState:
             actor.buffs.clear()
             actor.last_action = None
         self.monster_party.clear()
+        self.calculate_aeon_stats()
 
     def clean_equipment_inventory(self) -> None:
         while (self.equipment_inventory
@@ -190,6 +189,10 @@ class GameState:
         self.live_distance = 0
         for actor in self.characters.values():
             actor.reset()
+        empty_bonus_stats = {stat: 0 for stat in Stat}
+        for stats in self.bonus_aeon_stats.values():
+            stats.clear()
+            stats.update(empty_bonus_stats)
         self.calculate_aeon_stats_cache = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         self.calculate_aeon_stats()
         for actor in self.characters.values():

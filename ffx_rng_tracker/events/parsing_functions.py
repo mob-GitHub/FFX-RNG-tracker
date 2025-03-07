@@ -194,6 +194,7 @@ def parse_encounter_count_change(gs: GameState,
         count = parse_amount(amount, gs.encounters_count)
         gs.encounters_count = count
         count_name = 'Total'
+        gs.calculate_aeon_stats()
     elif name == 'random':
         count = parse_amount(amount, gs.random_encounters_count)
         gs.random_encounters_count = count
