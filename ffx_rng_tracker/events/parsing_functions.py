@@ -347,7 +347,8 @@ def parse_action(gs: GameState,
             text = (f'Action "{action}" requires a target '
                     '(Character/Monster/Monster Slot)')
             raise EventParsingError(text)
-        case TargetType.SINGLE_CHARACTER if not target_name:
+        case (TargetType.SINGLE_CHARACTER
+              | TargetType.COUNTER_SINGLE_CHARACTER) if not target_name:
             text = f'Action "{action}" requires a target (Character)'
             raise EventParsingError(text)
         case TargetType.SINGLE_MONSTER if not target_name:
@@ -359,7 +360,7 @@ def parse_action(gs: GameState,
             raise EventParsingError(text)
         case TargetType.SINGLE:
             target = parse_target(gs, target_name)
-        case TargetType.SINGLE_CHARACTER:
+        case TargetType.SINGLE_CHARACTER | TargetType.COUNTER_SINGLE_CHARACTER:
             if target_name.endswith('_c'):
                 target_name = target_name[:-2]
             char = parse_enum_member(target_name, Character, 'target')

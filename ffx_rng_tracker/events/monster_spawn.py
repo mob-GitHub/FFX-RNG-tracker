@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ..data.actor import MonsterActor
-from ..data.constants import MonsterSlot, Status
+from ..data.constants import MonsterSlot
 from ..data.monsters import Monster
 from .main import Event
 
@@ -28,23 +28,15 @@ class MonsterSpawn(Event):
         return actor
 
     def _calc_ctb(self) -> int:
-        if self.ctb is not None:
-            self.new_monster.ctb = self.ctb
-            return self.new_monster.ctb
-        last_actor = self.gamestate.last_actor
-        if last_actor.last_action:
-            last_actor_ctb_at_spawn = (last_actor.base_ctb
-                                       * last_actor.last_action.rank)
+        if self.ctb is None:
+            ctb = self.new_monster.base_ctb * 3
         else:
-            last_actor_ctb_at_spawn = 0
-        if Status.HASTE in last_actor.statuses:
-            last_actor_ctb_at_spawn //= 2
-        elif Status.SLOW in last_actor.statuses:
-            last_actor_ctb_at_spawn *= 2
-        # calculate the ctb that passed between when the last action
-        # was performed and when monsterspawn is called and then subtract it
-        # from what the ctb should have been if the events were simultaneous
-        ctb_to_subtract = last_actor_ctb_at_spawn - last_actor.ctb
-        ctb = self.new_monster.base_ctb * 3 - ctb_to_subtract
-        self.new_monster.ctb = ctb
+            ctb = self.ctb
+        ctb -= self.gamestate.ctb_since_last_action
+        if ctb >= 0:
+            self.new_monster.ctb = ctb
+        else:
+            self.gamestate.normalize_ctbs(ctb)
+            self.gamestate.ctb_since_last_action += ctb
+            self.new_monster.ctb = 0
         return self.new_monster.ctb

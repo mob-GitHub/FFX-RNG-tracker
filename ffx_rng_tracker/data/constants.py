@@ -168,6 +168,7 @@ class TargetType(StrEnum):
     MONSTERS_PARTY = 'Monsters\' Party'
     COUNTER = 'Counter'
     COUNTER_SELF = 'Counter Self'
+    COUNTER_SINGLE_CHARACTER = 'Counter Single Character'
     # Monster actions target types
     ALL = 'All'
     RANDOM_CHARACTER_REFLECT = 'Random Character Affected By Reflect'
@@ -728,6 +729,7 @@ HIT_CHANCE_FORMULA_TABLE = (
 COUNTER_TARGET_TYPES = {
     TargetType.COUNTER,
     TargetType.COUNTER_SELF,
+    TargetType.COUNTER_SINGLE_CHARACTER,
     TargetType.COUNTER_RANDOM_CHARACTER,
     TargetType.COUNTER_CHARACTERS_PARTY,
     TargetType.COUNTER_ALL,

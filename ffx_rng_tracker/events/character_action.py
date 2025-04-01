@@ -426,6 +426,18 @@ class CharacterAction(Event):
                 target.statuses.pop(status)
                 if status is Status.DEATH:
                     target.ctb = target.base_ctb * 3
+                    if self.action.is_counter:
+                        target.ctb -= self.gamestate.ctb_since_last_action
+                        # TODO
+                        # adding this here because it is only a real issue
+                        # when an action used as a counter revives
+                        # a character with autoregen
+                        # if auto-life and auto-phoenix are ever automated
+                        # this should be removed
+                        if Autoability.AUTO_REGEN in target.autoabilities:
+                            target.current_hp += (int(self.gamestate.ctb_since_last_action
+                                                      * (target.max_hp / 256))
+                                                  + 100)
                 result.removed_statuses.append(status)
 
     def _shatter_check(self) -> None:

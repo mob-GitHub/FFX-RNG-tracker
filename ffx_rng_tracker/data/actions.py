@@ -398,6 +398,33 @@ def get_character_actions() -> dict[str, Action]:
     quick_hit_ps2.name = 'Quick Hit (PS2)'
     quick_hit_ps2.rank = 1
     actions['quick_hit_ps2'] = quick_hit_ps2
+
+    auto_life_counter = deepcopy(actions['auto-life_2'])
+    auto_life_counter.target = TargetType.COUNTER_SELF
+    actions['auto-life_counter'] = auto_life_counter
+
+    auto_phoenix = deepcopy(actions['phoenix_down'])
+    auto_phoenix.name += ' (Auto-Phoenix)'
+    auto_phoenix.target = TargetType.COUNTER_SINGLE_CHARACTER
+    actions['auto_phoenix'] = auto_phoenix
+
+    auto_potion = deepcopy(actions['potion'])
+    auto_potion.name += ' (Auto-Potion)'
+    auto_potion.target = TargetType.COUNTER_SELF
+    actions['auto_potion'] = auto_potion
+
+    auto_hi_potion = deepcopy(actions['hi-potion'])
+    auto_hi_potion.name += ' (Auto-Potion)'
+    auto_hi_potion.target = TargetType.COUNTER_SELF
+    actions['auto_hi-potion'] = auto_hi_potion
+
+    auto_x_potion = deepcopy(actions['x-potion'])
+    auto_x_potion.name += ' (Auto-Potion)'
+    auto_x_potion.target = TargetType.COUNTER_SELF
+    actions['auto_x-potion'] = auto_x_potion
+
+    actions['taking_a_break...'].rank = 3
+    actions['summon'].rank = 3
     return actions
 
 

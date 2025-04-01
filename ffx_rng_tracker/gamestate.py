@@ -132,11 +132,12 @@ class GameState:
             else:
                 actor.statuses[status] = stacks
         actors = chain(self.characters.values(), self.monster_party)
-        ctb_ticks = self.get_min_ctb()
-        self.normalize_ctbs(ctb_ticks)
+        ctb = self.get_min_ctb()
+        self.ctb_since_last_action = ctb
+        self.normalize_ctbs(ctb)
         actors_with_regen = [a for a in actors if Status.REGEN in a.statuses]
         for actor in actors_with_regen:
-            actor.current_hp += (ctb_ticks * (actor.max_hp // 256)) + 100
+            actor.current_hp += int(ctb * (actor.max_hp / 256)) + 100
 
     def process_start_of_encounter(self) -> None:
         # TODO
@@ -147,6 +148,7 @@ class GameState:
         self.process_end_of_encounter()
 
     def process_end_of_encounter(self) -> None:
+        self.ctb_since_last_action = 0
         for actor in self.characters.values():
             if Status.DEATH in actor.statuses:
                 actor.current_hp = 1
@@ -181,6 +183,7 @@ class GameState:
         self.party.extend(self._default_party)
         self.monster_party.clear()
         self.last_actor: Actor = self.characters[Character.TIDUS]
+        self.ctb_since_last_action = 0
         self.compatibility = BASE_COMPATIBILITY[Configs.game_version]
         self.equipment_drops = 0
         self.encounters_count = 0
