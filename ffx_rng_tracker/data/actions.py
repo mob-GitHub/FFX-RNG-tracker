@@ -63,6 +63,7 @@ class Action:
     destroys_user: bool
     empties_od_bar: bool
     copied_by_copycat: bool
+    affected_by_alchemy: bool
     overdrive_user: Character | None
     overdrive_index: int
 
@@ -260,6 +261,7 @@ def parse_actions_file(file_path: str) -> list[Action]:
             destroys_user=destroys_user,
             empties_od_bar=empties_od_bar,
             copied_by_copycat=copied_by_copycat,
+            affected_by_alchemy=False,
             overdrive_user=overdrive_user,
             overdrive_index=overdrive_index,
         )
@@ -428,7 +430,18 @@ def get_character_actions() -> dict[str, Action]:
     return actions
 
 
+def fix_affected_by_alchemy(actions: list[Action]) -> None:
+    for action in actions:
+        if action.damage_formula not in (DamageFormula.FIXED_NO_VARIANCE,
+                                         DamageFormula.PERCENTAGE_TOTAL):
+            continue
+        if not action.heals:
+            continue
+        action.affected_by_alchemy = True
+
+
 ITEM_BIN = parse_actions_file('data_files/ffx_item.csv')
+fix_affected_by_alchemy(ITEM_BIN)
 COMMAND_BIN = parse_actions_file('data_files/ffx_command.csv')
 ACTIONS = get_character_actions()
 MONMAGIC1_BIN = parse_actions_file('data_files/ffx_monmagic1.csv')

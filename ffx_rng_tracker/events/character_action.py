@@ -790,6 +790,10 @@ def get_damage(
             damage = damage // 2
         if Status.MAGIC_BREAK in user.statuses:
             damage = damage // 2
+
+    if Autoability.ALCHEMY in user.autoabilities and action.affected_by_alchemy:
+        damage *= 2
+
     offensive_bonus = 0
     defensive_bonus = 0
     if action.damage_type is DamageType.PHYSICAL:
