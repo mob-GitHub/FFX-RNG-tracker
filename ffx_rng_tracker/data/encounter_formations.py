@@ -15,7 +15,7 @@ class Formation:
     def __str__(self) -> str:
         string = ', '.join([str(m) for m in self.monsters])
         if not string:
-            return '-'
+            return 'Empty'
         return string
 
     @property

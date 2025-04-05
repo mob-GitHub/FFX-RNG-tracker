@@ -63,6 +63,7 @@ class EncountersPlanner(EncountersTracker):
             tag.regex_pattern = re.compile(pattern, flags=re.IGNORECASE)
         else:
             tag.regex_pattern = REGEX_NEVER_MATCH
+        output = output.replace('| Empty', '')
         return super().edit_output(output, padding)
 
     def search_callback(self) -> None:

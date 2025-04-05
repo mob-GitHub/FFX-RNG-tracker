@@ -3,6 +3,12 @@
         "dummy": {
             "name" : "Boss",
             "formation": [],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dummy_normal": {
+            "name" : "Boss",
+            "formation": [],
             "forced_condition": "normal",
             "forced_party": ""
         },
@@ -514,6 +520,84 @@
             "name": "Yu Yevon",
             "formation": ["yu_yevon", "yu_pagoda", "yu_pagoda_2"],
             "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_valefor": {
+            "name": "Dark Valefor",
+            "formation": ["dark_valefor"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_ifrit": {
+            "name": "Dark Ifrit",
+            "formation": ["dark_ifrit"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_ixion": {
+            "name": "Dark Ixion",
+            "formation": ["dark_ixion"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_shiva": {
+            "name": "Dark Shiva",
+            "formation": ["dark_shiva"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_bahamut": {
+            "name": "Dark Bahamut",
+            "formation": ["dark_bahamut"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_anima": {
+            "name": "Dark Anima",
+            "formation": ["dark_anima"],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dark_yojimbo_1": {
+            "name": "Dark Yojimbo #1",
+            "formation": ["dark_yojimbo", "sinscale_4"],
+            "forced_condition": "ambush",
+            "forced_party": ""
+        },
+        "dark_yojimbo_2": {
+            "name": "Dark Yojimbo #2",
+            "formation": ["dark_yojimbo", "sinscale_4"],
+            "forced_condition": "normal",
+            "forced_party": ""
+        },
+        "dark_magus_sisters": {
+            "name": "Dark Magus Sisters",
+            "formation": ["dark_cindy", "dark_sandy", "dark_mindy"],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dark_magus_sisters_2": {
+            "name": "Dark Magus Sisters #2",
+            "formation": ["dark_mindy", "dark_sandy"],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dark_cindy": {
+            "name": "Dark Cindy",
+            "formation": ["dark_cindy"],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dark_sandy": {
+            "name": "Dark Sandy",
+            "formation": ["dark_sandy"],
+            "forced_condition": "",
+            "forced_party": ""
+        },
+        "dark_mindy": {
+            "name": "Dark Mindy",
+            "formation": ["dark_mindy"],
+            "forced_condition": "",
             "forced_party": ""
         }
     },

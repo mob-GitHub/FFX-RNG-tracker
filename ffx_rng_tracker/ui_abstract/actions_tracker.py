@@ -71,7 +71,8 @@ class ActionsTracker(TrackerUI):
             output = output.split('Command: ///')[-1]
             output = output[output.find('\n') + 1:]
         output = (output
-                  .replace('Boss', '')
+                  .replace('Boss ', '')
+                  .replace('Empty ', '')
                   .replace(' Normal', '')
                   .replace('Random ', '')
                   .replace('Simulated ', '')

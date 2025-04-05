@@ -162,6 +162,8 @@ def parse_encounter(gs: GameState,
         name = 'dummy'
     elif 'simulated'.startswith(name):
         name = 'simulation'
+    elif 'normal'.startswith(name):
+        name = 'dummy_normal'
     elif 'preemptive'.startswith(name):
         name = 'dummy_preemptive'
     elif 'ambush'.startswith(name):
