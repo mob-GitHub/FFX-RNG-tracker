@@ -36,7 +36,7 @@ class FFXRNGTracker:
             [self.get_rng_generator(i) for i in range(68)])
         # create a list of lists used to store rng values
         self._rng_arrays = [list() for _ in range(68)]
-        self._rng_current_positions = [0 for _ in range(68)]
+        self.rng_current_positions = [0 for _ in range(68)]
 
     def __repr__(self) -> str:
         return f'{type(self).__name__}(seed=({self.seed}))'
@@ -74,8 +74,8 @@ class FFXRNGTracker:
         the next value for that index.
         """
         array = self._rng_arrays[index]
-        position = self._rng_current_positions[index]
-        self._rng_current_positions[index] = position + 1
+        position = self.rng_current_positions[index]
+        self.rng_current_positions[index] = position + 1
         try:
             rng_value = array[position]
         except IndexError:
@@ -85,5 +85,5 @@ class FFXRNGTracker:
 
     def reset(self) -> None:
         """Reset the position of the rng arrays."""
-        self._rng_current_positions.clear()
-        self._rng_current_positions.extend(0 for _ in range(68))
+        self.rng_current_positions.clear()
+        self.rng_current_positions.extend(0 for _ in range(68))

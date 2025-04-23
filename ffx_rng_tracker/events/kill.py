@@ -24,7 +24,7 @@ class Kill(Event):
         if self.item_2:
             self.gamestate.inventory.add(self.item_2.item, self.item_2.quantity)
         self.gamestate.gil += self.monster.gil
-        rng_current_positions = self.gamestate._rng_tracker._rng_current_positions
+        rng_current_positions = self.gamestate._rng_tracker.rng_current_positions
         self.ability_rolls = rng_current_positions[13]
         self.equipment = self._get_equipment()
         self.ability_rolls = rng_current_positions[13] - self.ability_rolls

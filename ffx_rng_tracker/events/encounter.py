@@ -197,8 +197,7 @@ class MultizoneRandomEncounter(Event):
 
     def _get_encounters(self) -> list[RandomEncounter]:
         encounters = []
-        tracker = self.gamestate._rng_tracker
-        saved_rng_positions = tracker._rng_current_positions.copy()
+        self.gamestate.save_rng()
         for count, zone in enumerate(self.zones, 1):
             encounter = RandomEncounter(
                 gamestate=self.gamestate,
@@ -208,6 +207,5 @@ class MultizoneRandomEncounter(Event):
             if count < len(self.zones):
                 self.gamestate.encounters_count -= 1
                 self.gamestate.random_encounters_count -= 1
-                tracker._rng_current_positions.clear()
-                tracker._rng_current_positions.extend(saved_rng_positions)
+                self.gamestate.restore_rng()
         return encounters

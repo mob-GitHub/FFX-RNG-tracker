@@ -20,6 +20,7 @@ class GameState:
 
     def __init__(self, rng_tracker: FFXRNGTracker) -> None:
         self._rng_tracker = rng_tracker
+        self.save_rng()
         self._default_party = Character.TIDUS, Character.AURON
         self.characters = self._get_characters()
         self.bonus_aeon_stats = {character: {stat: 0 for stat in Stat}
@@ -36,6 +37,13 @@ class GameState:
         for character, defaults in CHARACTERS_DEFAULTS.items():
             characters[character] = CharacterActor(defaults)
         return characters
+
+    def save_rng(self) -> None:
+        self._saved_rng = self._rng_tracker.rng_current_positions.copy()
+
+    def restore_rng(self) -> None:
+        self._rng_tracker.rng_current_positions.clear()
+        self._rng_tracker.rng_current_positions.extend(self._saved_rng)
 
     def get_min_ctb(self) -> int:
         ctbs = set()
@@ -174,6 +182,7 @@ class GameState:
 
     def reset(self) -> None:
         self._rng_tracker.reset()
+        self.save_rng()
         self.inventory.reset()
         self.inventory.add(Item.POTION, 10)
         self.inventory.add(Item.PHOENIX_DOWN, 3)
