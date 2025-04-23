@@ -10,7 +10,7 @@ from ..logger import log_exceptions, log_tkinter_error
 from ..tracker import FFXRNGTracker
 from .seed_info import TkSeedInfo
 from .themes import cycle_theme, import_themes
-from .tkinter_utils import TkTracker
+from .tktracker import TkTracker
 from .trackersnotebook import WIDGETS, TkTrackersNotebook
 
 

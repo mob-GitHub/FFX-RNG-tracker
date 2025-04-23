@@ -8,6 +8,7 @@ from .encounters_tracker import EncountersTracker
 
 @dataclass
 class EncountersPlanner(EncountersTracker):
+    notes_file = 'encounters_planner_notes.csv'
 
     def __post_init__(self) -> None:
         super().__post_init__()
@@ -80,3 +81,6 @@ class EncountersPlanner(EncountersTracker):
         pattern = '|'.join([re.escape(w) for w in words])
         tag.regex_pattern = re.compile(pattern, flags=re.IGNORECASE)
         self.output_widget.highlight_pattern('#search bar', tag.regex_pattern)
+
+    def save_input_data(self) -> None:
+        return

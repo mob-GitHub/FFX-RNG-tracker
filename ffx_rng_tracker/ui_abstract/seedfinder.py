@@ -11,12 +11,7 @@ from .actions_tracker import ActionsTracker
 
 @dataclass
 class SeedFinder(ActionsTracker):
-
-    def get_default_input_data(self) -> str:
-        input_data = ('encounter\nauron attack sinscale_6\n'
-                      'tidus attack sinscale_6\nauron attack sinscale_6'
-                      )
-        return input_data
+    notes_file = 'seedfinder_notes.txt'
 
     def find_seed(self) -> None:
         # first 2 lines are always input dvs and "///"
@@ -80,3 +75,6 @@ class SeedFinder(ActionsTracker):
                 break
         else:
             self.warning_popup.print_output('Seed not found!')
+
+    def save_input_data(self) -> None:
+        return

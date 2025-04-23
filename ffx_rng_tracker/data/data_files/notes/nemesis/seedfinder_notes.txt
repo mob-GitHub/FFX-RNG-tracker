@@ -1,0 +1,4 @@
+encounter
+auron attack sinscale_6
+tidus attack sinscale_6
+auron attack sinscale_6

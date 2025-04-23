@@ -2,7 +2,7 @@ import logging
 import re
 from dataclasses import is_dataclass
 from tkinter import ttk
-from typing import Any, Iterator
+from typing import Any, Iterable
 
 from ..configs import Configs, UIWidgetConfigs
 from ..logger import UIHandler
@@ -10,7 +10,7 @@ from .output_widget import TkOutputWidget
 
 
 def add_dict_to_treeview(treeview: ttk.Treeview,
-                         k_v_pairs: Iterator[tuple[str | int, Any]],
+                         k_v_pairs: Iterable[tuple[str | int, Any]],
                          parent: str = '',
                          ) -> None:
     for k, v in k_v_pairs:

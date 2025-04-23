@@ -3,17 +3,15 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import count
 from tkinter import ttk
-from typing import Iterator
+from typing import Iterator, Literal
 
 from ..configs import UIWidgetConfigs
 from ..data.encounters import EncounterData, StepsData, get_encounter_notes
 from ..events.parser import EventParser
 from ..ui_abstract.encounters_tracker import EncountersTracker
-from .base_widgets import (BetterScale, ScrollableFrame, TkConfirmPopup,
-                           TkWarningPopup)
-from .input_widget import TkSearchBarWidget
-from .output_widget import TkOutputWidget
-from .tkinter_utils import bind_all_children, create_command_proxy
+from .base_widgets import BetterScale, ScrollableFrame
+from .tkinter_utils import create_command_proxy
+from .tktracker import TkTracker
 
 
 @dataclass
@@ -56,7 +54,7 @@ class EncounterSliders(ScrollableFrame):
     def __iter__(self) -> Iterator[EncounterSlider]:
         return iter(self._sliders)
 
-    def add_slider(self, data: EncounterData) -> None:
+    def add_slider(self, data: EncounterData | StepsData) -> None:
         if data.min == data.max:
             self._sliders.append(EncounterSlider(data))
             return
@@ -98,6 +96,7 @@ class TkEncountersInputWidget(ttk.Frame):
         self.sliders = EncounterSliders(self)
         self.sliders.grid(row=1, column=0, columnspan=3, sticky='nsew')
         self.rowconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
 
         self.start_button = ttk.Radiobutton(
             self, text='Start', variable=self.sliders.current_zone,
@@ -142,42 +141,21 @@ class TkEncountersInputWidget(ttk.Frame):
         self.sliders.register_callback(callback_func)
 
 
-class TkEncountersTracker(ttk.Frame):
+class TkEncountersTracker(TkTracker):
+    tracker_type = EncountersTracker
+    input_widget_type = TkEncountersInputWidget
 
     def __init__(self,
                  parent,
                  parser: EventParser,
                  configs: UIWidgetConfigs,
-                 *args,
-                 **kwargs,
+                 orient: Literal['vertical', 'horizontal'] = 'horizontal',
                  ) -> None:
-        super().__init__(parent, *args, **kwargs)
-        frame = ttk.Frame(self)
-        frame.pack(fill='y', side='left')
-
-        search_bar = TkSearchBarWidget(frame)
-        search_bar.pack(fill='x')
-
-        input_widget = TkEncountersInputWidget(frame)
+        super().__init__(parent, parser, configs, orient)
+        self.input_widget: TkEncountersInputWidget
+        self.output_widget.text.config(wrap='none')
+        self.output_widget.add_h_scrollbar()
         encounters = get_encounter_notes(
-            EncountersTracker.notes_file, parser.gamestate.seed)
+            self.tracker.notes_file, parser.gamestate.seed)
         for encounter in encounters:
-            input_widget.sliders.add_slider(encounter)
-        input_widget.pack(expand=True, fill='y')
-
-        output_widget = TkOutputWidget(self, wrap='none')
-        output_widget.pack(expand=True, fill='both', side='right')
-
-        bind_all_children(
-            self, '<Control-s>', lambda _: self.tracker.save_input_data())
-
-        self.tracker = EncountersTracker(
-            configs=configs,
-            parser=parser,
-            input_widget=input_widget,
-            output_widget=output_widget,
-            search_bar=search_bar,
-            warning_popup=TkWarningPopup(),
-            confirmation_popup=TkConfirmPopup(),
-            )
-        self.tracker.callback()
+            self.input_widget.sliders.add_slider(encounter)

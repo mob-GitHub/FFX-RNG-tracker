@@ -1,16 +1,15 @@
 import tkinter as tk
 from collections.abc import Callable
 from tkinter import ttk
+from typing import Literal
 
 from ..configs import UIWidgetConfigs
 from ..data.encounter_formations import ZONES
 from ..events.parser import EventParser
 from ..ui_abstract.encounters_table import EncountersTable
-from .base_widgets import (BetterSpinbox, ScrollableFrame, TkConfirmPopup,
-                           TkWarningPopup)
-from .input_widget import TkSearchBarWidget
-from .output_widget import TkOutputWidget
+from .base_widgets import BetterSpinbox, ScrollableFrame
 from .tkinter_utils import create_command_proxy
+from .tktracker import TkTracker
 
 
 class TkEncountersTableInputWidget(ttk.Frame):
@@ -24,28 +23,29 @@ class TkEncountersTableInputWidget(ttk.Frame):
 
         ttk.Label(self, text='Encounters to show').grid(row=1, column=0)
         self.shown_encounters = BetterSpinbox(self, from_=0, to=2000)
-        self.shown_encounters.grid(row=1, column=1)
+        self.shown_encounters.grid(row=1, column=1, sticky='w')
         self.shown_encounters.set(20)
 
         ttk.Label(self, text='Start from').grid(row=2, column=0)
         self.starting_encounter = BetterSpinbox(self, from_=-2000, to=2000)
-        self.starting_encounter.grid(row=2, column=1)
+        self.starting_encounter.grid(row=2, column=1, sticky='w')
 
         ttk.Label(self, text='Random Encounters').grid(row=3, column=0)
         self.random_encounters = BetterSpinbox(self, from_=0, to=2000)
-        self.random_encounters.grid(row=3, column=1)
+        self.random_encounters.grid(row=3, column=1, sticky='w')
 
         ttk.Label(self, text='Bosses').grid(row=4, column=0)
         self.forced_encounters = BetterSpinbox(self, from_=0, to=2000)
-        self.forced_encounters.grid(row=4, column=1)
+        self.forced_encounters.grid(row=4, column=1, sticky='w')
 
         ttk.Label(self, text='Simulated Encounters').grid(row=5, column=0)
         self.simulated_encounters = BetterSpinbox(self, from_=0, to=2000)
-        self.simulated_encounters.grid(row=5, column=1)
+        self.simulated_encounters.grid(row=5, column=1, sticky='w')
 
         zones_frame = ScrollableFrame(self)
         zones_frame.grid(row=10, column=0, columnspan=2, sticky='nsew')
         self.rowconfigure(10, weight=1)
+        self.columnconfigure(1, weight=1)
 
         self.zones_buttons: dict[str, ttk.Checkbutton] = {}
         self.zones: dict[str, tk.BooleanVar] = {}
@@ -101,35 +101,16 @@ class TkEncountersTableInputWidget(ttk.Frame):
             create_command_proxy(button, {'invoke'}, callback_func)
 
 
-class TkEncountersTable(ttk.Frame):
-    """"""
+class TkEncountersTable(TkTracker):
+    tracker_type = EncountersTable
+    input_widget_type = TkEncountersTableInputWidget
 
     def __init__(self,
                  parent,
                  parser: EventParser,
                  configs: UIWidgetConfigs,
-                 *args,
-                 **kwargs,
+                 orient: Literal['vertical', 'horizontal'] = 'horizontal',
                  ) -> None:
-        super().__init__(parent, *args, **kwargs)
-        frame = ttk.Frame(self)
-        frame.pack(fill='y', side='left')
-
-        search_bar = TkSearchBarWidget(frame)
-        search_bar.pack(fill='x')
-
-        input_widget = TkEncountersTableInputWidget(frame)
-        input_widget.pack(expand=True, fill='y')
-
-        output_widget = TkOutputWidget(self, wrap='none')
-        output_widget.pack(expand=True, fill='both', side='right')
-
-        self.tracker = EncountersTable(
-            configs=configs,
-            parser=parser,
-            input_widget=input_widget,
-            output_widget=output_widget,
-            search_bar=search_bar,
-            warning_popup=TkWarningPopup(),
-            confirmation_popup=TkConfirmPopup(),
-            )
+        super().__init__(parent, parser, configs, orient)
+        self.output_widget.text.config(wrap='none')
+        self.output_widget.add_h_scrollbar()

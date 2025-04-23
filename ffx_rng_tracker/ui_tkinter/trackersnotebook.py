@@ -17,7 +17,7 @@ from .monster_data_viewer import TkMonsterDataViewer
 from .seed_info import TkSeedInfo
 from .seedfinder import TkSeedFinder
 from .steps_tracker import TkStepsTracker
-from .tkinter_utils import TkTracker
+from .tktracker import TkTracker
 from .yojimbo_tracker import TkYojimboTracker
 
 

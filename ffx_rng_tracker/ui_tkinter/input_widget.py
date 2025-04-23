@@ -55,17 +55,17 @@ class TkDefaultTextEntry(ttk.Entry):
         create_command_proxy(
             self, {'insert', 'delete', 'replace', 'Return'}, callback_func)
 
-    def on_focus_in(self, event: str = None) -> None:
+    def on_focus_in(self, event: tk.Event | None = None) -> None:
         if str(self.cget('state')) == 'readonly':
             self.config(state='normal')
             self.set_input('')
 
-    def on_focus_out(self, event: str = None) -> None:
+    def on_focus_out(self, event: tk.Event | None = None) -> None:
         if self.get() == '':
             self.set_input(self.default_text)
             self.config(state='readonly')
 
-    def on_return(self, event: str = None) -> None:
+    def on_return(self, event: tk.Event | None = None) -> None:
         # will always raise a TclError but
         # it will be intercepted by the command proxy
         try:

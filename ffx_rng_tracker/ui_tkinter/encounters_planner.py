@@ -1,6 +1,7 @@
 import tkinter as tk
 from collections.abc import Callable
 from tkinter import ttk
+from typing import Literal
 
 from ..configs import UIWidgetConfigs
 from ..data.encounter_formations import ZONES
@@ -8,11 +9,9 @@ from ..data.encounters import EncounterData
 from ..events.parser import EventParser
 from ..ui_abstract.encounters_planner import EncountersPlanner
 from ..utils import stringify
-from .base_widgets import TkConfirmPopup, TkWarningPopup
 from .encounters_tracker import EncounterSliders
-from .input_widget import TkSearchBarWidget
-from .output_widget import TkOutputWidget
 from .tkinter_utils import create_command_proxy
+from .tktracker import TkTracker
 
 
 class TkEncountersPlannerInputWidget(ttk.Frame):
@@ -86,35 +85,16 @@ class TkEncountersPlannerInputWidget(ttk.Frame):
         self.sliders.register_callback(callback_func)
 
 
-class TkEncountersPlanner(ttk.Frame):
-    """"""
+class TkEncountersPlanner(TkTracker):
+    tracker_type = EncountersPlanner
+    input_widget_type = TkEncountersPlannerInputWidget
 
     def __init__(self,
                  parent,
                  parser: EventParser,
                  configs: UIWidgetConfigs,
-                 *args,
-                 **kwargs,
+                 orient: Literal['vertical', 'horizontal'] = 'horizontal',
                  ) -> None:
-        super().__init__(parent, *args, **kwargs)
-        frame = ttk.Frame(self)
-        frame.pack(fill='y', side='left')
-
-        search_bar = TkSearchBarWidget(frame)
-        search_bar.pack(fill='x')
-
-        input_widget = TkEncountersPlannerInputWidget(frame)
-        input_widget.pack(expand=True, fill='y')
-
-        output_widget = TkOutputWidget(self, wrap='none')
-        output_widget.pack(expand=True, fill='both', side='right')
-
-        self.tracker = EncountersPlanner(
-            configs=configs,
-            parser=parser,
-            input_widget=input_widget,
-            output_widget=output_widget,
-            search_bar=search_bar,
-            warning_popup=TkWarningPopup(),
-            confirmation_popup=TkConfirmPopup(),
-            )
+        super().__init__(parent, parser, configs, orient)
+        self.output_widget.text.config(wrap='none')
+        self.output_widget.add_h_scrollbar()

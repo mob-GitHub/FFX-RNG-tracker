@@ -29,8 +29,8 @@ class TkMonsterSelectionWidget(tk.Listbox):
             return ''
         return self._monster_names[monster_index]
 
-    def set_input(self, data: str) -> None:
-        old_selection, *monster_names = data.split('|')
+    def set_input(self, text: str) -> None:
+        old_selection, *monster_names = text.split('|')
         self._monster_names = monster_names
         self._listvar.set(monster_names)
         try:

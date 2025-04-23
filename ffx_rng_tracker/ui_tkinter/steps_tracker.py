@@ -1,14 +1,11 @@
-from tkinter import ttk
+from typing import Literal
 
 from ..configs import UIWidgetConfigs
 from ..data.encounters import get_steps_notes
 from ..events.parser import EventParser
 from ..ui_abstract.steps_tracker import StepsTracker
-from .base_widgets import TkConfirmPopup, TkWarningPopup
 from .encounters_tracker import TkEncountersInputWidget
-from .input_widget import TkSearchBarWidget
-from .output_widget import TkOutputWidget
-from .tkinter_utils import bind_all_children
+from .tktracker import TkTracker
 
 
 class TkStepsInputWidget(TkEncountersInputWidget):
@@ -27,42 +24,21 @@ class TkStepsInputWidget(TkEncountersInputWidget):
         return '\n'.join(input_data)
 
 
-class TkStepsTracker(ttk.Frame):
+class TkStepsTracker(TkTracker):
+    tracker_type = StepsTracker
+    input_widget_type = TkStepsInputWidget
 
     def __init__(self,
                  parent,
                  parser: EventParser,
                  configs: UIWidgetConfigs,
-                 *args,
-                 **kwargs,
+                 orient: Literal['vertical', 'horizontal'] = 'horizontal',
                  ) -> None:
-        super().__init__(parent, *args, **kwargs)
-        frame = ttk.Frame(self)
-        frame.pack(fill='y', side='left')
-
-        search_bar = TkSearchBarWidget(frame)
-        search_bar.pack(fill='x')
-
-        input_widget = TkStepsInputWidget(frame)
+        super().__init__(parent, parser, configs, orient)
+        self.input_widget: TkStepsInputWidget
+        self.output_widget.text.config(wrap='none')
+        self.output_widget.add_h_scrollbar()
         encounters = get_steps_notes(
-            StepsTracker.notes_file, parser.gamestate.seed)
+            self.tracker.notes_file, parser.gamestate.seed)
         for encounter in encounters:
-            input_widget.sliders.add_slider(encounter)
-        input_widget.pack(expand=True, fill='y')
-
-        output_widget = TkOutputWidget(self, wrap='none')
-        output_widget.pack(expand=True, fill='both', side='right')
-
-        bind_all_children(
-            self, '<Control-s>', lambda _: self.tracker.save_input_data())
-
-        self.tracker = StepsTracker(
-            configs=configs,
-            parser=parser,
-            input_widget=input_widget,
-            output_widget=output_widget,
-            search_bar=search_bar,
-            warning_popup=TkWarningPopup(),
-            confirmation_popup=TkConfirmPopup(),
-            )
-        self.tracker.callback()
+            self.input_widget.sliders.add_slider(encounter)

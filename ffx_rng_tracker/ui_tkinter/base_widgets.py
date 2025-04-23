@@ -6,7 +6,7 @@ from tkinter import messagebox, ttk
 from .tkinter_utils import create_command_proxy
 
 
-class ScrollableText(tk.Frame):
+class ScrollableText(ttk.Frame):
     """Frame widget with a Text and a vertical Scrollbar
     and an optional horizontal Scrollbar.
 
@@ -144,7 +144,7 @@ class BetterSpinbox(ttk.Spinbox):
         """Set the spinbox content."""
         self.config(state='normal')
         self.delete(0, 'end')
-        self.insert(0, text)
+        self.insert(0, str(text))
         self.config(state='readonly')
 
     def register_callback(self, callback_func: Callable[[], None]) -> None:
