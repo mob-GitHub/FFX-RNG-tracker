@@ -91,13 +91,19 @@ class Encounter(Event):
                 if Status.HASTE in actor.statuses:
                     icv = icv // 2
                 actor.ctb = icv
+            for character in (Character.SANDY, Character.MINDY):
+                actor = self.gamestate.characters[character]
+                icv = actor.base_ctb * 3
+                actor.ctb = icv
         else:
             for character, actor in self.gamestate.characters.items():
                 if character is Character.UNKNOWN:
                     continue
                 index = min(20 + actor.index, 27)
                 variance_rng = self._advance_rng(index)
-                if character not in self.gamestate.party or actor.first_strike:
+                if (character not in (Character.SANDY, Character.MINDY)
+                        and (character not in self.gamestate.party
+                             or actor.first_strike)):
                     continue
                 variance = ICV_VARIANCE[actor.stats[Stat.AGILITY]] + 1
                 icv = actor.base_ctb * 3 - (variance_rng % variance)

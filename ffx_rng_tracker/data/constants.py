@@ -195,6 +195,16 @@ class TargetType(StrEnum):
     COUNTER_CHARACTERS_PARTY = 'Counter Characters\' Party'
     COUNTER_ALL = 'Counter All'
     COUNTER_LAST_TARGET = 'Counter Last Target'
+    # Magus Sisters target types
+    RANDOM_CHARACTER_NOT_AUTOLIFE = 'Random Character Not Affected By Auto-Life'
+    RANDOM_CHARACTER_DEATH = 'Random Character Affected By Death'
+    RANDOM_CHARACTER_NOT_SHELL_NOT_REFLECT = 'Random Character Not Affected By Shell or Reflect'
+    RANDOM_CHARACTER_NOT_PROTECT_NOT_REFLECT = 'Random Character Not Affected By Protect or Reflect'
+    RANDOM_CHARACTER_NOT_HASTE_NOT_REFLECT = 'Random Character Not Affected By Haste or Reflect'
+    RANDOM_CHARACTER_NOT_USER_DAMAGED = 'Random Character (Not User) Damaged'
+    PARTY_NOT_NULALL = 'Character\'s Party Not Affected By NulAll'
+    CINDY_NOT_REFLECT = 'Cindy Affected By Reflect'
+    CINDY = 'Cindy'
 
 
 class HitChanceFormula(StrEnum):

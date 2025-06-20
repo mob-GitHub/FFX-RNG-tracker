@@ -9,6 +9,7 @@ from .data.constants import (AEONS_STATS_CONSTANTS, BASE_COMPATIBILITY,
                              Status)
 from .data.equipment import Equipment
 from .data.items import Inventory
+from .data.magus_sister import Cindy, MagusSister, Mindy, Sandy
 from .data.statuses import DURATION_STATUSES, TEMPORARY_STATUSES
 from .tracker import FFXRNGTracker
 
@@ -30,6 +31,7 @@ class GameState:
         self.equipment_inventory: list[Equipment | None] = []
         self.party: list[Character] = []
         self.monster_party: list[MonsterActor] = []
+        self.magus_sisters = self._get_magus_sisters()
         self.reset()
 
     def _get_characters(self) -> dict[Character, CharacterActor]:
@@ -37,6 +39,19 @@ class GameState:
         for character, defaults in CHARACTERS_DEFAULTS.items():
             characters[character] = CharacterActor(defaults)
         return characters
+
+    def _get_magus_sisters(self) -> dict[Character, MagusSister]:
+        magus_sisters = {}
+        for c, m in zip((Character.CINDY, Character.SANDY, Character.MINDY),
+                        (Cindy, Sandy, Mindy)):
+            magus_sisters[c] = m(
+                cindy=self.characters[Character.CINDY],
+                sandy=self.characters[Character.SANDY],
+                mindy=self.characters[Character.MINDY],
+                advance_rng=self._rng_tracker.advance_rng,
+                monster_party=self.monster_party,
+            )
+        return magus_sisters
 
     def save_rng(self) -> None:
         self._saved_rng = self._rng_tracker.rng_current_positions.copy()
@@ -166,6 +181,8 @@ class GameState:
             actor.last_action = None
         self.monster_party.clear()
         self.calculate_aeon_stats()
+        for magus_sister in self.magus_sisters.values():
+            magus_sister.reset()
 
     def clean_equipment_inventory(self) -> None:
         while (self.equipment_inventory
@@ -191,6 +208,8 @@ class GameState:
         self.party.clear()
         self.party.extend(self._default_party)
         self.monster_party.clear()
+        for magus_sister in self.magus_sisters.values():
+            magus_sister.reset()
         self.last_actor: Actor = self.characters[Character.TIDUS]
         self.ctb_since_last_action = 0
         self.compatibility = BASE_COMPATIBILITY[Configs.game_version]

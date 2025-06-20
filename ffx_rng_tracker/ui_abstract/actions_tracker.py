@@ -3,7 +3,7 @@ from ..data.monsters import get_monsters_dict
 from ..events.parsing_functions import (
     ParsingFunction, parse_action, parse_actor_status, parse_encounter,
     parse_encounter_count_change, parse_end_encounter, parse_equipment_change,
-    parse_heal, parse_monster_action,
+    parse_heal, parse_magus_sister_action, parse_monster_action,
     parse_monster_elemental_affinities_change, parse_monster_spawn,
     parse_party_change, parse_roll, parse_stat_update, parse_summon)
 from ..utils import stringify
@@ -27,6 +27,7 @@ class ActionsTracker(TrackerUI):
             parse_equipment_change,
             parse_action,
             parse_monster_action,
+            parse_magus_sister_action,
             parse_heal,
             parse_actor_status,
             parse_monster_elemental_affinities_change,

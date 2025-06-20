@@ -314,6 +314,8 @@ def parse_summon(gs: GameState, aeon_name: str = '', *_) -> ChangeParty:
         raise EventParsingError
     if 'magus_sisters'.startswith(aeon_name):
         party_formation = [Character.CINDY, Character.SANDY, Character.MINDY]
+        for m in gs.magus_sisters.values():
+            m.on_summon()
     else:
         for aeon in tuple(Character)[8:]:
             if stringify(aeon).startswith(aeon_name):
@@ -476,6 +478,85 @@ def parse_yojimbo_action(gs: GameState,
     monster = parse_dict_key(monster_name, get_monsters_dict(), 'monster')
     overdrive = overdrive == 'overdrive'
     return YojimboTurn(gs, action, monster, overdrive)
+
+
+def parse_magus_sister_action(gs: GameState,
+                              sister_name: str = '',
+                              command_name: str = '',
+                              *_,
+                              ) -> Comment:
+    if not sister_name:
+        raise EventParsingError
+    elif 'cindy'.startswith(sister_name):
+        sister = gs.magus_sisters[Character.CINDY]
+    elif 'sandy'.startswith(sister_name):
+        sister = gs.magus_sisters[Character.SANDY]
+    elif 'mindy'.startswith(sister_name):
+        sister = gs.magus_sisters[Character.MINDY]
+    else:
+        raise EventParsingError
+
+    gs.save_rng()
+    commands = sister.get_command_list()
+    text = (f'Available commands for {sister.actor}: '
+            f'{', '.join(c for c in commands)}')
+    chosen_commands = [(n, c) for n, c in commands.items()
+                       if stringify(n).startswith(command_name)]
+    if len(chosen_commands) != 1:
+        # avoids advancing rng in case of an error
+        gs.restore_rng()
+        raise EventParsingError(text)
+
+    name, command = chosen_commands[0]
+    if command == sister.autolife:
+        # auto-life is a counter so it doesnt bring up the command menu
+        gs.restore_rng()
+
+    actions: list[CharacterAction] = []
+    for a, t in command():
+        if a.name == 'Delta Attack':
+            # TODO
+            # check how motivation works when they use delta attack
+            # TODO
+            # check how ctb works when they use delta attack
+            actor = sister.cindy
+        else:
+            actor = sister.actor
+        actions.append(CharacterAction(gs, actor, a, t))
+
+    # TODO
+    # check what happens to motivation/overdrive
+    # when a mindy doublecast is used
+    last_action = actions[-1]
+    sister.set_field_0x715(
+        last_action=last_action.action,
+        hp_damage=last_action.results[-1].hp.damage,
+        mp_damage=last_action.results[-1].mp.damage,
+        ctb_damage=last_action.results[-1].ctb.damage,
+        )
+    sister.resolve_pending_motivation_and_overdrive()
+    if command == sister.dismiss:
+        for s in gs.magus_sisters.values():
+            s.on_dismiss()
+
+    if len(actions) == 1:
+        lines = str(actions[0]).splitlines()
+        index = lines[0].index('->')
+        insert = f'-> {name} [{sister.motivation}/100] '
+        lines[0] = lines[0][:index] + insert + lines[0][index:]
+        for i, line in enumerate(lines):
+            if i == 0:
+                continue
+            lines[i] = f'{' ' * len(insert)}{line}'
+    else:
+        lines = [f'{sister.actor.character} -> {name} [{sister.motivation}/100]:']
+        for action in actions:
+            action_lines = str(action).splitlines()
+            index = action_lines[0].index('->') + 3
+            for i, line in enumerate(action_lines):
+                action_lines[i] = f'    {line[index:]}'
+            lines.append('\n    '.join(action_lines))
+    return Comment(gs, '\n'.join(lines))
 
 
 def parse_compatibility_update(gs: GameState,
@@ -844,6 +925,9 @@ USAGE: dict[ParsingFunction, list[str]] = {
     ],
     parse_yojimbo_action: [
         'yojimboturn [action] [monster] (overdrive)',
+    ],
+    parse_magus_sister_action: [
+        'magusturn [name] (command)'
     ],
     parse_compatibility_update: [
         'compatibility [(+/-)amount]',
