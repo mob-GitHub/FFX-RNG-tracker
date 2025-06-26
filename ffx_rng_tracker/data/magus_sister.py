@@ -507,11 +507,8 @@ class Sandy(MagusSister):
         if self._roll_magus_random(None, self.motivation + 150):
             commands['Fight!'] = self.fight
         chars = self.cindy, self.sandy, self.mindy
-        # TODO
-        # condition might not be accurate
-        # Check (FrontlineChars.NearDeath or Battle.RollMagusRandom(unknown=0, chance=128))
         if (self._roll_magus_random(None, 128)
-                or any(c.current_hp < (c.max_hp / 4) for c in chars)):
+                or any(c.current_hp < (c.max_hp // 2) for c in chars)):
             commands['Defense!'] = self.defense
         commands.update(super().get_command_list())
         return commands
