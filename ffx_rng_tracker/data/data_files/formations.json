@@ -48,10 +48,22 @@
             "forced_condition": "",
             "forced_party": "t"
         },
+        "sahagins_jp": {
+            "name": "Sahagins (JP)",
+            "formation": ["sahagin_4", "sahagin_4", "sahagin_4"],
+            "forced_condition": "normal",
+            "forced_party": "t"
+        },
         "geosgaeno": {
             "name": "Geosgaeno",
             "formation": ["geosgaeno"],
             "forced_condition": "",
+            "forced_party": "t"
+        },
+        "geosgaeno_jp": {
+            "name": "Geosgaeno (JP)",
+            "formation": ["geosgaeno"],
+            "forced_condition": "normal",
             "forced_party": "t"
         },
         "klikk_1": {
