@@ -128,7 +128,7 @@ class ScrollableText(ttk.Frame):
         # fg_rgb is a tuple of values from 0 to 0xffff
         if fg_rgb < (0xff, 0xff, 0xff):
             bg = '#ffffff'
-        self.text.configure(foreground=fg, background=bg)
+        self.text.configure(foreground=fg, background=bg, insertbackground=fg)
 
 
 class BetterSpinbox(ttk.Spinbox):
