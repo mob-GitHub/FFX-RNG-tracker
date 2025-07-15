@@ -259,5 +259,4 @@ def ctb_sorter(characters: list[CharacterActor],
     # sorting by icv, then by party, then by agility and index (for characters)
     # or index and agility (for monsters)
     ctbs.sort(key=lambda v: v[0])
-    ctbs = [v[1] for v in ctbs]
-    return ' '.join(ctbs)
+    return ' '.join([v[1] for v in ctbs])

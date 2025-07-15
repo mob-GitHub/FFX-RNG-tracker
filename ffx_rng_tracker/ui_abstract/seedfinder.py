@@ -13,7 +13,7 @@ from .actions_tracker import ActionsTracker
 class SeedFinder(ActionsTracker):
     notes_file = 'seedfinder_notes.txt'
 
-    def find_seed(self) -> None:
+    def find_seed(self) -> int | None:
         # first 2 lines are always input dvs and "///"
         input_dvs, _, *input_lines = self.input_widget.get_input().splitlines()
         input_text = '\n'.join(input_lines)
@@ -21,10 +21,10 @@ class SeedFinder(ActionsTracker):
         events = self.parser.parse(edited_input_text)
 
         indexes = []
-        for index, event in enumerate(events):
-            if (isinstance(event, CharacterAction)
-                    and event.action.damage_formula is not DamageFormula.NO_DAMAGE
-                    and event.action.damages_hp):
+        for index, e in enumerate(events):
+            if (isinstance(e, CharacterAction)
+                    and e.action.damage_formula is not DamageFormula.NO_DAMAGE
+                    and e.action.damages_hp):
                 indexes.append(index)
 
         damage_values_needed = DAMAGE_VALUES_NEEDED[Configs.game_version]
@@ -68,13 +68,22 @@ class SeedFinder(ActionsTracker):
                 event: CharacterAction = events[index]
                 damage_values.extend(r.hp.damage for r in event.results)
             if damage_values == input_dvs:
-                self.input_widget.set_input(
-                    f'# Seed number: {seed}\n{input_text}')
-                self.warning_popup.print_output(f'Seed: {seed}')
-                self.callback()
-                break
-        else:
+                return seed
+        return -1
+
+    def print_found_seed(self, seed: int | None) -> None:
+        if seed is None:
+            return
+        elif seed == -1:
             self.warning_popup.print_output('Seed not found!')
+        else:
+            # first 2 lines are always input dvs and "///"
+            _, _, *input_lines = self.input_widget.get_input().splitlines()
+            input_text = '\n'.join(input_lines)
+            self.input_widget.set_input(
+                f'# Seed number: {seed}\n{input_text}')
+            self.warning_popup.print_output(f'Seed: {seed}')
+            self.callback()
 
     def save_input_data(self) -> None:
         return
