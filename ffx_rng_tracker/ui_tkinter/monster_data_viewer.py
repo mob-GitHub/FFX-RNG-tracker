@@ -16,6 +16,7 @@ class TkMonsterSelectionWidget(tk.Listbox):
         kwargs.setdefault('highlightthickness', 0)
         super().__init__(parent, *args, **kwargs)
         self.bind('<<ThemeChanged>>', self.on_theme_changed)
+        self.on_theme_changed()
         self._listvar: tk.StringVar = kwargs['listvariable']
         self._monster_names: list[str] = []
 
@@ -44,7 +45,7 @@ class TkMonsterSelectionWidget(tk.Listbox):
     def register_callback(self, callback_func: Callable[[], None]) -> None:
         create_command_proxy(self, {'activate'}, callback_func)
 
-    def on_theme_changed(self, event: tk.Event) -> None:
+    def on_theme_changed(self, _: tk.Event | None = None) -> None:
         style = ttk.Style()
         fg = style.configure('.', 'foreground')
         bg = style.configure('.', 'background')

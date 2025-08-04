@@ -20,7 +20,6 @@ class ScrollableText(ttk.Frame):
 
     def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent)
-        self.bind('<<ThemeChanged>>', self.on_theme_changed)
         self.h_scrollbar: ttk.Scrollbar | None = None
         self.v_scrollbar = ttk.Scrollbar(self)
         self.v_scrollbar.grid(row=0, column=1, sticky='ns')
@@ -30,6 +29,8 @@ class ScrollableText(ttk.Frame):
         self.text.grid(row=0, column=0, sticky='nsew')
         if kwargs.get('wrap') == 'none':
             self.add_h_scrollbar()
+        self.bind('<<ThemeChanged>>', self.on_theme_changed)
+        self.on_theme_changed()
 
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
@@ -120,7 +121,7 @@ class ScrollableText(ttk.Frame):
         self.text.see(index)
         self.text.tag_add('#seek', index, f'{index}+{len(text)}c')
 
-    def on_theme_changed(self, event: tk.Event) -> None:
+    def on_theme_changed(self, _: tk.Event | None = None) -> None:
         style = ttk.Style()
         fg = style.configure('.', 'foreground')
         bg = style.configure('.', 'background')
@@ -161,6 +162,7 @@ class ScrollableFrame(ttk.Frame):
             self.outer_frame, width=280, highlightthickness=0)
         self.canvas.pack(side='left', fill='both', expand=True)
         self.canvas.bind('<<ThemeChanged>>', self.on_theme_changed)
+        self.on_theme_changed()
         scrollbar = ttk.Scrollbar(
             self.outer_frame, orient='vertical', command=self.canvas.yview)
         scrollbar.pack(side='right', fill='y')
@@ -184,7 +186,7 @@ class ScrollableFrame(ttk.Frame):
         self.pack = self.outer_frame.pack
         self.grid = self.outer_frame.grid
 
-    def on_theme_changed(self, event: tk.Event) -> None:
+    def on_theme_changed(self, _: tk.Event | None = None) -> None:
         style = ttk.Style()
         bg = style.configure('.', 'background')
         self.canvas.configure(background=bg)
