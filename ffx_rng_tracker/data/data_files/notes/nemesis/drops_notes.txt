@@ -367,31 +367,7 @@ defender_x bahamut
 # ghost yuna
 # ghost tidus
 ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
-ghost ixion
+/repeat 30
 
 # Mt. Gagazet
 steal biran_ronso

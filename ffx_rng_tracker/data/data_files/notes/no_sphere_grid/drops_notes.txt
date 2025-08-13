@@ -401,35 +401,7 @@ defender_x lulu
 
 # Cavern of the Stolen Fayth
 ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
-ghost auron
+/repeat 30
 
 # Mt. Gagazet
 yenke_ronso kimahri

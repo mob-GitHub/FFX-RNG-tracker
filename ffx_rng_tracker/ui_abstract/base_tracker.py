@@ -62,6 +62,7 @@ class TrackerUI(ABC):
             '///',
             '/nopadding',
             '/macro [macro name]',
+            '/repeat (# of times) (# of lines)',
             ]
         for function in self.get_parsing_functions():
             if function is parse_roll:

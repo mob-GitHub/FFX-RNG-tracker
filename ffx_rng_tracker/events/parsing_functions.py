@@ -290,8 +290,8 @@ def parse_roll(gs: GameState,
         raise EventParsingError('amount needs to be an greater or equal to 0')
     if not (0 <= rng_index < 68):
         raise EventParsingError(f'Can\'t advance rng index {rng_index}')
-    if amount > 100000:
-        raise EventParsingError('Can\'t advance rng more than 100000 times')
+    if amount > 200:
+        raise EventParsingError('Can\'t advance rng more than 200 times')
     return AdvanceRNG(gs, rng_index, amount)
 
 

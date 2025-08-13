@@ -28,8 +28,22 @@ class EventParser:
         """Parse through the input text and returns a list of events."""
         text = self.apply_macros(text)
 
+        lines = text.splitlines()
         events = []
-        for line in text.splitlines():
+        for i, line in enumerate(lines):
+            if line == '/repeat' or line.startswith('/repeat '):
+                _, *rest = line.split()
+                try:
+                    times = min(max(1, int(rest[0])), 5000)
+                except (IndexError, ValueError):
+                    times = 1
+                try:
+                    n_of_lines = min(max(1, int(rest[1])), 5000 // times)
+                except (IndexError, ValueError):
+                    n_of_lines = 1
+                for _ in range(times):
+                    for j in range(n_of_lines):
+                        lines.insert(i + 1, lines[i - 1 - j])
             event = self.parse_line(line)
             events.append(event)
         return events
