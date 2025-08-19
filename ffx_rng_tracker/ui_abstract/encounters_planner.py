@@ -2,12 +2,14 @@ import re
 from dataclasses import dataclass
 
 from ..configs import REGEX_NEVER_MATCH, UITagConfigs
+from ..data.constants import UIWidget
 from ..data.monsters import get_monsters_dict
 from .encounters_tracker import EncountersTracker
 
 
 @dataclass
 class EncountersPlanner(EncountersTracker):
+    name = UIWidget.ENCOUNTERS_PLANNER
     notes_file = 'encounters_planner_notes.csv'
 
     def __post_init__(self) -> None:

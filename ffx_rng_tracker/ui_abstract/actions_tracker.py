@@ -1,4 +1,4 @@
-from ..data.constants import Character
+from ..data.constants import Character, UIWidget
 from ..data.monsters import get_monsters_dict
 from ..events.parsing_functions import (
     ParsingFunction, parse_action, parse_actor_status, parse_encounter,
@@ -14,6 +14,7 @@ class ActionsTracker(TrackerUI):
     """Widget used to track damage, critical chance,
     escape chance and miss chance rng.
     """
+    name = UIWidget.ACTIONS
     notes_file = 'actions_notes.txt'
 
     def get_parsing_functions(self) -> list[ParsingFunction]:

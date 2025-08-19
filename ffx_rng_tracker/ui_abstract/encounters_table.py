@@ -2,11 +2,13 @@ import re
 from dataclasses import dataclass
 
 from ..configs import REGEX_NEVER_MATCH
+from ..data.constants import UIWidget
 from .encounters_tracker import EncountersTracker
 
 
 @dataclass
 class EncountersTable(EncountersTracker):
+    name = UIWidget.ENCOUNTERS_TABLE
     notes_file = 'encounters_table_notes.csv'
 
     def get_default_input_data(self) -> str:

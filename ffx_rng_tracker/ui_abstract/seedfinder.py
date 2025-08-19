@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from itertools import product
 
 from ..configs import Configs
-from ..data.constants import DamageFormula
+from ..data.constants import DamageFormula, UIWidget
 from ..data.seeds import (DAMAGE_VALUES_NEEDED, FRAMES_FROM_BOOT,
                           POSSIBLE_XORED_DATETIMES, datetime_to_seed)
 from ..events.character_action import CharacterAction
@@ -11,6 +11,7 @@ from .actions_tracker import ActionsTracker
 
 @dataclass
 class SeedFinder(ActionsTracker):
+    name = UIWidget.SEEDFINDER
     notes_file = 'seedfinder_notes.txt'
 
     def find_seed(self) -> int | None:

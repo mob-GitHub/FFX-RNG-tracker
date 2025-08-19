@@ -92,7 +92,7 @@ class TkTrackersNotebook(ttk.Notebook):
         return window
 
     def add_tracker(self, tracker_type: type[TkTracker], seed: int) -> None:
-        name = WIDGETS[tracker_type]
+        name = tracker_type.tracker_type.name
         configs = Configs.ui_widgets[name]
         if not configs.shown:
             return
@@ -117,16 +117,3 @@ TRACKERS: tuple[type[TkTracker], ...] = (
     TkYojimboTracker,
     TkSeedFinder,
 )
-WIDGETS: dict[type[tk.Widget], UIWidget] = {
-    TkSeedInfo: UIWidget.SEED_INFO,
-    TkDropsTracker: UIWidget.DROPS,
-    TkEncountersTracker: UIWidget.ENCOUNTERS,
-    TkStepsTracker: UIWidget.STEPS,
-    TkEncountersPlanner: UIWidget.ENCOUNTERS_PLANNER,
-    TkEncountersTable: UIWidget.ENCOUNTERS_TABLE,
-    TkActionsTracker: UIWidget.ACTIONS,
-    TkYojimboTracker: UIWidget.YOJIMBO,
-    TkMonsterDataViewer: UIWidget.MONSTER_DATA,
-    TkSeedFinder: UIWidget.SEEDFINDER,
-    TkConfigsLogViewer: UIWidget.CONFIGS,
-}

@@ -1,3 +1,4 @@
+from ..data.constants import UIWidget
 from ..data.monsters import get_monsters_dict
 from ..events.parsing_functions import (ParsingFunction, parse_bribe,
                                         parse_character_ap, parse_death,
@@ -8,6 +9,7 @@ from .base_tracker import TrackerUI
 
 
 class DropsTracker(TrackerUI):
+    name = UIWidget.DROPS
     notes_file = 'drops_notes.txt'
 
     def get_parsing_functions(self) -> list[ParsingFunction]:

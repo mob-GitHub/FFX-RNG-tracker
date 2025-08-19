@@ -4,6 +4,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 
 from ..configs import REGEX_NEVER_MATCH, UITagConfigs, UIWidgetConfigs
+from ..data.constants import UIWidget
 from ..data.notes import get_notes, save_notes
 from ..events.parser import EventParser
 from ..events.parsing_functions import USAGE, ParsingFunction, parse_roll
@@ -20,12 +21,12 @@ class TrackerUI(ABC):
     search_bar: InputWidget
     warning_popup: WarningPopup
     confirmation_popup: ConfirmPopup
-    previous_edited_input: str = field(default='', init=False, repr=False)
-    previous_edited_output: str = field(default='', init=False, repr=False)
-    notes_file: str = field(default='', init=False, repr=False)
-    usage: str = field(default='', init=False, repr=False)
+    name: UIWidget = field(init=False, repr=False)
+    notes_file: str = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
+        self.previous_edited_input = ''
+        self.previous_edited_output = ''
         self.usage = self.get_usage()
 
         for function in self.get_parsing_functions():

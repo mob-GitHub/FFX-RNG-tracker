@@ -2,6 +2,7 @@ from collections.abc import Callable
 from tkinter import ttk
 
 from ..configs import Configs, UIWidgetConfigs
+from ..data.constants import UIWidget
 from ..data.seeds import DAMAGE_VALUES_NEEDED, get_seed_from_string
 from ..errors import InvalidDamageValueError, SeedNotFoundError
 from ..ui_functions import get_equipment_types, get_status_chance_table
@@ -9,6 +10,8 @@ from .output_widget import TkOutputWidget
 
 
 class TkSeedInfo(ttk.Frame):
+    name = UIWidget.SEED_INFO
+
     def __init__(self,
                  parent,
                  configs: UIWidgetConfigs,

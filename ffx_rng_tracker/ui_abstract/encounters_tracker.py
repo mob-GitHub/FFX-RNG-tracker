@@ -1,3 +1,4 @@
+from ..data.constants import UIWidget
 from ..data.encounters import get_encounter_notes
 from ..data.notes import save_notes
 from ..events.parsing_functions import (ParsingFunction, parse_encounter,
@@ -8,6 +9,7 @@ from .base_tracker import TrackerUI
 
 class EncountersTracker(TrackerUI):
     """Widget used to track encounters RNG."""
+    name = UIWidget.ENCOUNTERS
     notes_file = 'encounters_notes.csv'
 
     def get_default_input_data(self) -> str:

@@ -65,3 +65,19 @@ def bind_all_children(widget: tk.Widget,
 
 def get_default_font() -> tuple[str, int]:
     return 'Courier New', Configs.font_size
+
+
+def show_message_box(parent: tk.Misc,
+                     /,
+                     message: str = '',
+                     title: str = '',
+                     ) -> None:
+    """Implements the tk_messageBox command, documentation can be found here
+    https://www.tcl.tk/man/tcl8.6/TkCmd/messageBox.htm
+    """
+    args = (
+        '-parent', parent,
+        '-message', message,
+        '-title', title,
+    )
+    parent.tk.call('tk_messageBox', *args)

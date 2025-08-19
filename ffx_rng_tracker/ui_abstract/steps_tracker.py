@@ -1,3 +1,4 @@
+from ..data.constants import UIWidget
 from ..data.encounters import get_steps_notes
 from ..data.notes import save_notes
 from ..events.parsing_functions import ParsingFunction, parse_encounter_checks
@@ -5,6 +6,7 @@ from ..ui_abstract.encounters_tracker import EncountersTracker
 
 
 class StepsTracker(EncountersTracker):
+    name = UIWidget.STEPS
     notes_file = 'steps_notes.csv'
 
     def get_default_input_data(self) -> str:

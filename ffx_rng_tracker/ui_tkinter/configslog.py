@@ -5,6 +5,7 @@ from tkinter import ttk
 from typing import Any, Iterable
 
 from ..configs import Configs, UIWidgetConfigs
+from ..data.constants import UIWidget
 from ..logger import UIHandler
 from .output_widget import TkOutputWidget
 
@@ -54,6 +55,7 @@ def add_dict_to_treeview(treeview: ttk.Treeview,
 
 class TkConfigsLogViewer(ttk.Frame):
     """Widget that shows the loaded configuration and the log."""
+    name = UIWidget.CONFIGS
 
     def __init__(self,
                  parent,

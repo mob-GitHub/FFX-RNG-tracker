@@ -8,10 +8,11 @@ from ..events.parser import EventParser
 from ..gamestate import GameState
 from ..logger import log_exceptions, log_tkinter_error
 from ..tracker import FFXRNGTracker
+from .help_window import show_help_window
 from .seed_info import TkSeedInfo
 from .themes import cycle_theme, import_themes
 from .tktracker import TkTracker
-from .trackersnotebook import WIDGETS, TkTrackersNotebook
+from .trackersnotebook import TkTrackersNotebook
 
 
 @log_exceptions()
@@ -39,6 +40,7 @@ def main(*,
     if Configs.default_theme in style.theme_names():
         style.theme_use(Configs.default_theme)
 
+    root.bind_all('<F1>', show_help_window)
     root.bind_all('<F8>', cycle_theme)
 
     if widget is None:
@@ -51,7 +53,7 @@ def main(*,
 
         def callback_func(seed: int, _: bool) -> None:
             parser = EventParser(GameState(FFXRNGTracker(seed)))
-            name = WIDGETS[widget]
+            name = widget.tracker_type.name
             configs = Configs.ui_widgets[name]
             new_ui = widget(root, parser, configs)
             ui.forget()
@@ -63,4 +65,5 @@ def main(*,
         else:
             callback_func(Configs.seed, True)
 
+    ttk.Label(root, text='Press F1 for Help').place(relx=1, anchor='ne')
     root.mainloop()

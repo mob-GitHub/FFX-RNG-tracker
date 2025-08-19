@@ -6,6 +6,7 @@ from ffx_rng_tracker.configs import Configs
 from ffx_rng_tracker.data.constants import UIWidget
 from ffx_rng_tracker.logger import (log_exceptions, log_tkinter_error,
                                     setup_main_logger)
+from ffx_rng_tracker.ui_tkinter.help_window import show_help_window
 from ffx_rng_tracker.ui_tkinter.monster_data_viewer import TkMonsterDataViewer
 from ffx_rng_tracker.ui_tkinter.themes import cycle_theme, import_themes
 
@@ -27,12 +28,14 @@ def main() -> None:
     if Configs.default_theme in style.theme_names():
         style.theme_use(Configs.default_theme)
 
+    root.bind_all('<F1>', show_help_window)
     root.bind_all('<F8>', cycle_theme)
 
     ui_configs = Configs.ui_widgets[UIWidget.MONSTER_DATA]
     ui = TkMonsterDataViewer(root, ui_configs)
     ui.pack(expand=True, fill='both')
 
+    ttk.Label(root, text='Press F1 for Help').place(relx=1, anchor='ne')
     root.mainloop()
 
 

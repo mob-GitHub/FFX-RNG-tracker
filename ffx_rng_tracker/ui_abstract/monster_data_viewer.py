@@ -2,6 +2,7 @@ import re
 from dataclasses import dataclass, field
 
 from ..configs import REGEX_NEVER_MATCH, UITagConfigs, UIWidgetConfigs
+from ..data.constants import UIWidget
 from ..data.monsters import get_monsters_dict
 from ..ui_functions import format_monster_data
 from .input_widget import InputWidget
@@ -17,6 +18,7 @@ class MonsterDataViewer:
     output_widget: OutputWidget
     search_bar: InputWidget
     monster_data: dict[str, str] = field(init=False, repr=False)
+    name: UIWidget = field(default=UIWidget.MONSTER_DATA, init=False, repr=False)
 
     def __post_init__(self) -> None:
         monsters = get_monsters_dict()

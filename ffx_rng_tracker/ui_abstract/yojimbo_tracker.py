@@ -1,4 +1,5 @@
 from ..data.actions import YOJIMBO_ACTIONS
+from ..data.constants import UIWidget
 from ..events.parsing_functions import (ParsingFunction,
                                         parse_compatibility_update,
                                         parse_death, parse_roll,
@@ -8,6 +9,7 @@ from .base_tracker import TrackerUI
 
 class YojimboTracker(TrackerUI):
     """Widget used to track Yojimbo rng."""
+    name = UIWidget.YOJIMBO
     notes_file = 'yojimbo_notes.txt'
 
     def get_parsing_functions(self) -> list[ParsingFunction]:
