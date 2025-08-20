@@ -76,7 +76,6 @@ rikku attack m1
 tidus attack m1
 status m1
 
-# Chain encounter
 encounter underwater_ruins
 tidus attack piranha
 tidus attack piranha_2
@@ -106,7 +105,6 @@ rikku grenade m1
 status m1
 
 # -- Besaid --
-# Lagoon encounters
 encounter besaid_lagoon
 tidus attack piranha
 wakka attack piranha
@@ -122,7 +120,6 @@ wakka attack piranha
 # Tidus equips Brotherhood
 weapon tidus 4 strength_+5%
 
-# Besaid tutorial fights
 encounter wakka_tutorial
 tidus attack dingo
 wakka attack condor
@@ -198,7 +195,6 @@ lulu fire ragora_2
 
 /macro kilika grid
 
-# Kilika In encounters
 # Wakka equips Scout
 weapon wakka 2 icestrike sensor
 # If Wakka equips any Armguard
@@ -226,7 +222,6 @@ valefor fire sinspawn_geneaux
 valefor fire sinspawn_geneaux
 valefor energy_ray
 
-# Kilika Out encounters
 encounter kilika_woods
 tidus attack dinonix
 wakka attack killer_bee
@@ -355,6 +350,7 @@ encounter old_road
 
 # encounter simulation_old_road
 
+# -- Clasko Skip Screen --
 encounter clasko_skip_screen
 encounter clasko_skip_screen
 
@@ -427,8 +423,6 @@ wakka attack m1
 # wakka thunder_shot 16.0
 status m1
 
-
-# Mix tutorial
 encounter rikku_tutorial
 rikku ultra_potion rikku
 # rikku frag_grenade bunyip
@@ -476,7 +470,6 @@ encounter macalania_woods
 
 weapon tidus 1 first_strike
 
-# Spherimorph
 encounter spherimorph
 armor tidus 1 lightningproof
 rikku grenade monsters
@@ -486,9 +479,9 @@ status m1
 
 /macro crawler grid
 
+# -- Lake Macalania --
 encounter lake_macalania
 
-# Crawler
 encounter crawler
 rikku lightning_marble negator
 # rikku lightning_marble negator
@@ -504,7 +497,6 @@ rikku lightning_bolt crawler
 weapon tidus 4 strength_+10% strength_+5% waterstrike
 
 # -- Macalania Temple --
-# Seymour
 encounter seymour
 stat m4 hp 0
 tidus haste tidus
@@ -537,7 +529,6 @@ stat tidus strength -10
 encounter crevasse
 encounter crevasse
 
-# Wendigo
 encounter wendigo
 tidus haste tidus
 # Tidus equips Brotherhood
@@ -626,51 +617,46 @@ tidus attack evrae
 tidus attack evrae
 
 # -- Bevelle --
-# Fight 1
 encounter bevelle_guards_1
 tidus attack warrior_monk
 tidus attack warrior_monk_2
 tidus attack warrior_monk
 
-# Fight 2
 encounter bevelle_guards_2
 tidus attack m1
 tidus attack m1
 rikku sleeping_powder monsters
 kimahri silence_grenade monsters
 
-# Fight 3
 encounter bevelle_guards_3
 tidus attack warrior_monk
 tidus attack warrior_monk_2
 tidus attack warrior_monk
 
-# Fight 4
 encounter bevelle_guards_4
 tidus attack m1
 tidus attack m1
 rikku sleeping_powder monsters
 kimahri silence_grenade monsters
 
-# Fight 5
 encounter bevelle_guards_5
-# using 2 bomb cores
-tidus attack m1
-tidus attack m3
+# Using AoE throwables
+tidus haste rikku
+rikku silence_grenade monsters
+rikku silence_grenade monsters
 rikku bomb_core m2
-kimahri bomb_core m2
 
-# using throwables
+# Using Sleeping Powders
 # tidus haste rikku
 # rikku sleeping_powder monsters
-# rikku sleeping_powder monsters
 # rikku bomb_core m2
-# tidus attack m2
+# rikku sleeping_powder monsters
 
-# using 1 bomb core and 2 throwables
-# rikku sleeping_powder monsters
+# Using Bomb Cores
+# tidus attack m1
+# tidus attack m3
 # rikku bomb_core m2
-# rikku sleeping_powder monsters
+# kimahri bomb_core m2
 
 # -- Via Purifico --
 /macro via purifico grid
@@ -681,7 +667,6 @@ ixion attack maze_larva
 encounter via_purifico_corridor
 ixion attack maze_larva
 
-# Isaaru fights
 encounter isaaru_grothia
 bahamut attack ifrit_2
 
@@ -737,7 +722,7 @@ encounter defender_x
 bahamut attack defender_x
 bahamut attack defender_x
 
-# -- Sunken Cave --
+# -- Cavern of the Stolen Fayth --
 # encounter calm_lands_gorge
 # encounter cave_green_zone
 encounter cave_white_zone
@@ -779,6 +764,7 @@ encounter sanctuary_keeper
 tidus armor_break m1
 bahamut attack m1
 
+# -- Zanarkand --
 # encounter zanarkand_overpass
 
 # encounter zanarkand_dome
@@ -802,6 +788,7 @@ bahamut attack yunalesca
 bahamut attack yunalesca
 bahamut attack yunalesca
 
+# -- Sin --
 encounter left_fin
 bahamut impulse left_fin
 bahamut impulse left_fin
@@ -810,12 +797,10 @@ encounter right_fin
 bahamut impulse right_fin
 bahamut impulse right_fin
 
-# Sin Core
 encounter sin_core
 # bahamut attack sinspawn_genais
 bahamut impulse sin_2
 
-# Overdrive Sin
 encounter overdrive_sin
 bahamut impulse
 bahamut attack sin_3
@@ -836,7 +821,6 @@ bahamut attack m1
 /macro bfa grid
 # weapon auron 1 first_strike
 
-# Braska's Final Aeon
 encounter bfa
 rikku armor_break m1
 # rikku chaos_grenade

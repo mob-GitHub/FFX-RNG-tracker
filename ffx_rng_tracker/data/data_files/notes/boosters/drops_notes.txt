@@ -1,6 +1,6 @@
 /usage
 
-# Zanarkand
+# -- Zanarkand --
 party ta
 sinscale_6 auron
 sinscale_6 tidus
@@ -18,7 +18,7 @@ sinspawn_ammes tidus
 
 tanker tidus
 
-# Baaj Temple
+# -- Underwater Ruins --
 party t
 sahagin_4 tidus
 sahagin_4 tidus
@@ -34,7 +34,7 @@ piranha_3 rikku
 
 tros rikku
 
-# Besaid
+# -- Besaid --
 party tw
 
 # Forced encounters
@@ -45,7 +45,7 @@ water_flan lulu
 ??? tidus
 garuda_3 wakka
 
-# S.S. Liki
+# -- S.S. Liki --
 party tykwl
 sin wakka
 sinspawn_echuilles tidus
@@ -54,14 +54,14 @@ sinscale_3 tidus
 sinscale_3 tidus
 sinscale_3 tidus
 
-# Kilika
+# -- Kilika --
 geneauxs_tentacle wakka
 geneauxs_tentacle wakka
 sinspawn_geneaux wakka
 
 lord_ochu wakka
 
-# Luca
+# -- Luca --
 # Fight 1
 worker tidus
 worker tidus
@@ -103,41 +103,41 @@ party tyakwl
 vouivre_2 auron
 garuda_2 wakka
 
-# Mi'ihen Highroad
+# -- Mi'ihen --
 # Piercing tutorial
 raldo_2 auron
 
 chocobo_eater yuna
 
-# Moonflow
+# -- Moonflow --
 extractor wakka
 
 party tyakwlr
 
-# Thunder Plains
-
-# Macalania Woods
+# -- Macalania Woods --
 spherimorph wakka
 
-# Lake Macalania
+# -- Lake Macalania --
 negator unknown
 crawler wakka
 
-# Seymour 1
+# -- Macalania Temple --
+# Seymour
 guado_guardian wakka
 guado_guardian wakka
 anima wakka
 seymour wakka
 
+# -- Crevasse --
 # Wendigo
 wendigo wakka
 guado_guardian_2 wakka
 guado_guardian_2 wakka
 
-# Bikanel Desert
+# -- Bikanel --
 party takwlr
 
-# Home
+# -- Home --
 # Fight 1
 guado_guardian_3 wakka
 bomb_2 wakka
@@ -154,10 +154,10 @@ guado_guardian_3 wakka
 chimera_2 wakka
 chimera_2 wakka
 
-# Airship
+# -- Airship --
 evrae wakka
 
-# Bevelle
+# -- Bevelle --
 # Fight 1
 warrior_monk wakka
 rifle wakka
@@ -195,7 +195,7 @@ warrior_monk wakka
 rifle wakka
 rifle wakka
 
-# Via Purifico
+# -- Via Purifico --
 party ya
 
 # isaaru summons
@@ -206,19 +206,19 @@ bahamut ixion
 # but the items are both nothing
 roll rng11 2
 
-# Via Purifico underwater
+# -- Underwater --
 party twr
 
 evrae_altana wakka
 
-# Highbridge
+# -- Highbridge --
 party tyakwlr
 seymour_natus wakka
 
-# Calm Lands
+# -- Calm Lands --
 defender_x wakka
 
-# Mt. Gagazet
+# -- Gagazet --
 yenke_ronso kimahri
 biran_ronso kimahri
 
@@ -226,11 +226,12 @@ seymour_flux wakka
 
 sanctuary_keeper wakka
 
-# Zanarkand
+# -- Zanarkand --
 spectral_keeper wakka
 
 yunalesca wakka
 
+# -- Sin --
 left_fin wakka
 
 right_fin wakka

@@ -1,6 +1,6 @@
 /usage
 
-# Zanarkand
+# -- Zanarkand --
 party ta
 sinscale_6 auron
 sinscale_6 tidus
@@ -18,7 +18,7 @@ sinspawn_ammes auron
 
 tanker tidus
 
-# Baaj Temple
+# -- Underwater Ruins --
 party t
 sahagin_4 tidus
 sahagin_4 tidus
@@ -53,7 +53,7 @@ piranha_3 tidus
 # steal tros
 tros rikku
 
-# Besaid
+# -- Besaid --
 party tw
 piranha tidus
 piranha_2 wakka
@@ -70,7 +70,7 @@ dingo_2 tidus
 condor_2 wakka
 water_flan_2 lulu
 
-# S.S. Liki
+# -- S.S. Liki --
 party tykwl
 sin valefor
 sinspawn_echuilles tidus
@@ -79,7 +79,7 @@ sinscale_3 tidus
 # sinscale_3 tidus
 # sinscale_3 tidus
 
-# Kilika
+# -- Kilika --
 # forced fight
 ragora_2 lulu
 
@@ -87,7 +87,7 @@ geneauxs_tentacle valefor
 geneauxs_tentacle valefor
 sinspawn_geneaux valefor
 
-# Luca
+# -- Luca --
 # Fight 1
 worker lulu
 worker lulu
@@ -131,7 +131,7 @@ vouivre_2 auron
 # death wakka
 garuda_2 auron
 
-# Mi'ihen Highroad
+# -- Mi'ihen --
 # Piercing tutorial
 raldo_2 auron
 # death
@@ -139,13 +139,16 @@ raldo_2 auron
 # Chocobo Eater
 # death
 
-# Old Road
+# -- Old Road --
 # death
 
-# Clasko Skip Screen
+# -- Clasko Skip Screen --
 # death
 
-# Djose and Moonflow
+# -- Djose --
+# death
+
+# -- Moonflow --
 # death
 
 extractor wakka
@@ -165,7 +168,7 @@ steal ???_3
 # ???_2 rikku
 # roll rng11
 
-# Thunder Plains
+# -- Thunder Plains --
 # steal melusine
 steal gold_element
 steal larva
@@ -176,7 +179,7 @@ steal iron_giant
 death rikku
 death yuna
 
-# Macalania Woods
+# -- Macalania Woods --
 # steal iguion
 steal chimera
 steal blue_element
@@ -185,27 +188,21 @@ steal blue_element
 
 spherimorph rikku
 
-# Lake Macalania
+# -- Lake Macalania --
 # If Gatling Gun
 # death rikku
 # negator kimahri
 
 # If no Gatling Gun
 negator rikku
+
 death rikku
 death rikku
 death tidus
 crawler rikku
 
-steal snow_wolf
-death lulu
-death rikku
-
-steal snow_wolf
-death lulu
-death rikku
-
-# Seymour 1
+# -- Macalania Temple --
+# Seymour
 guado_guardian valefor
 guado_guardian valefor
 steal anima
@@ -213,6 +210,7 @@ anima shiva
 death shiva
 seymour rikku
 
+# -- Crevasse --
 # steal ice_flan
 
 steal snow_wolf
@@ -236,7 +234,7 @@ death yuna
 # death rikku
 wendigo rikku
 
-# Bikanel Desert
+# -- Bikanel --
 party takwlr
 
 # steal alcyone
@@ -245,7 +243,7 @@ steal zu
 steal sand_wolf
 steal sand_worm
 
-# Home
+# -- Home --
 # Fight 1
 steal bomb_2
 guado_guardian_3 rikku
@@ -267,7 +265,7 @@ guado_guardian_3 kimahri
 chimera_2 kimahri
 chimera_2 kimahri
 
-# Airship
+# -- Airship --
 steal evrae
 steal evrae 1
 # Poison Breath 1
@@ -278,7 +276,7 @@ death rikku
 death kimahri
 evrae rikku
 
-# Bevelle
+# -- Bevelle --
 # Fight 1
 warrior_monk rikku
 warrior_monk_2 rikku
@@ -319,7 +317,7 @@ rifle rikku
 # death
 yat-99 rikku
 
-# Via Purifico
+# -- Via Purifico --
 party ya
 # death auron
 # death yuna
@@ -336,13 +334,13 @@ bahamut shiva
 # but the items are both nothing
 roll rng11 2
 
-# Via Purifico underwater
+# -- Underwater --
 party twr
 
 death ???
 evrae_altana tidus
 
-# Highbridge
+# -- Highbridge --
 party tyawlr
 death yuna
 death rikku
@@ -360,7 +358,7 @@ death valefor
 # death kimahri
 seymour_natus shiva
 
-# Calm Lands
+# -- Calm Lands --
 # steal flame_flan
 # steal skoll
 
@@ -399,11 +397,11 @@ defender_x lulu
 # They have 50% chance to drop equipment
 # epaaj auron
 
-# Cavern of the Stolen Fayth
+# -- Cavern of the Stolen Fayth --
 ghost auron
 /repeat 30
 
-# Mt. Gagazet
+# -- Gagazet --
 yenke_ronso kimahri
 biran_ronso kimahri
 
@@ -415,11 +413,12 @@ seymour_flux lulu
 
 sanctuary_keeper tidus
 
-# Zanarkand
+# -- Zanarkand --
 spectral_keeper auron
 
 yunalesca lulu
 
+# -- Sin --
 left_fin lulu
 
 right_fin lulu

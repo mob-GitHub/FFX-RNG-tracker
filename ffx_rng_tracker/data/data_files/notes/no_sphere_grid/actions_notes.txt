@@ -76,7 +76,6 @@ rikku attack m1
 tidus attack m1
 status m1
 
-# Chain encounter
 encounter underwater_ruins
 tidus attack piranha
 tidus attack piranha_2
@@ -106,7 +105,6 @@ rikku grenade m1
 status m1
 
 # -- Besaid --
-# Lagoon encounters
 encounter besaid_lagoon
 tidus attack piranha
 wakka attack piranha
@@ -122,7 +120,6 @@ wakka attack piranha
 # Tidus equips Brotherhood
 weapon tidus 4 strength_+5%
 
-# Besaid tutorial fights
 encounter wakka_tutorial
 tidus attack dingo
 wakka attack condor
@@ -211,7 +208,6 @@ valefor fire m1
 valefor fire m1
 status m1
 
-# Kilika Out encounters
 encounter kilika_woods
 encounter kilika_woods
 encounter kilika_woods
@@ -362,6 +358,7 @@ encounter old_road
 
 # encounter simulation_old_road
 
+# -- Clasko Skip Screen --
 encounter clasko_skip_screen
 encounter clasko_skip_screen
 
@@ -455,7 +452,6 @@ encounter macalania_woods
 
 weapon tidus 1 first_strike
 
-# Spherimorph
 encounter spherimorph
 tidus spiral_cut spherimorph 2.5
 # rikku grenade monsters
@@ -465,7 +461,7 @@ status m1
 
 encounter lake_macalania
 
-# Crawler
+# -- Lake Macalania --
 encounter crawler
 rikku lunar_curtain auron
 rikku lightning_marble m2
@@ -490,11 +486,10 @@ auron hi-potion auron
 auron phoenix_down rikku
 rikku lightning_marble m1
 
-# tidus equips brotherhood
+# Tidus equips Brotherhood
 weapon tidus 4 strength_+10% strength_+5% waterstrike
 
 # -- Macalania Temple --
-# Seymour
 encounter seymour
 stat m4 hp 0
 rikku electro_marble m2
@@ -529,7 +524,6 @@ encounter crevasse
 encounter crevasse
 encounter crevasse
 
-# Wendigo
 encounter wendigo
 rikku lightning_marble m2
 rikku chaos_grenade
@@ -600,224 +594,149 @@ encounter evrae
 # TODO
 
 # -- Bevelle --
-# Fight 1
-encounter
-tidus attack warrior_monk
-tidus attack warrior_monk_2
-tidus attack warrior_monk
+encounter bevelle_guards_1
+# TODO
 
-# Fight 2
-encounter
-tidus attack ykt-63
-tidus attack ykt-63
-# rikku sleeping_powder ykt-63
-rikku sleeping_powder warrior_monk_2
-rikku sleeping_powder warrior_monk_2
-kimahri silence_grenade warrior_monk_2
-kimahri silence_grenade warrior_monk_2
+encounter bevelle_guards_2
+# TODO
 
-# Fight 3
-encounter
-tidus attack warrior_monk
-tidus attack warrior_monk_2
-tidus attack warrior_monk
+encounter bevelle_guards_3
+# TODO
 
-# Fight 4
-encounter
-tidus attack ykt-63
-tidus attack ykt-63
-# rikku sleeping_powder ykt-63
-rikku sleeping_powder warrior_monk_2
-rikku sleeping_powder warrior_monk_2
-kimahri silence_grenade warrior_monk_2
-kimahri silence_grenade warrior_monk_2
+encounter bevelle_guards_4
+# TODO
 
-# Fight 5
-encounter
-# using 2 bomb cores
-tidus attack warrior_monk
-tidus attack warrior_monk
-rikku bomb_core yat-99
-kimahri bomb_core yat-99
-
-# using throwables
-# tidus haste rikku
-# rikku sleeping_powder warrior_monk
-# rikku sleeping_powder warrior_monk
-# rikku sleeping_powder yat-99
-# rikku sleeping_powder warrior_monk
-# rikku sleeping_powder warrior_monk
-# rikku sleeping_powder yat-99
-# tidus attack yat-99
-
-# using 1 bomb core and 2 throwables
-# kimahri sleeping_powder warrior_monk
-# kimahri sleeping_powder warrior_monk
-# kimahri sleeping_powder yat-99
-# rikku bomb_core yat-99
-# kimahri sleeping_powder warrior_monk
-# kimahri sleeping_powder warrior_monk
-# kimahri sleeping_powder yat-99
+encounter bevelle_guards_5
+# TODO
 
 # -- Via Purifico --
+encounter via_purifico_corridor
+# TODO
 
-encounter
-ixion attack maze_larva
+encounter via_purifico_corridor
+# TODO
 
-encounter
-ixion attack maze_larva
+encounter isaaru_grothia
+# TODO
 
-# Isaaru fights
-encounter
-bahamut attack ifrit_2
+encounter isaaru_pterya
+# TODO
 
-encounter
-bahamut attack valefor
-
-encounter
-# ixion thunder bahamut
-ixion attack bahamut
-ixion attack bahamut
-ixion attack bahamut
-ixion attack bahamut
-ixion attack bahamut
+encounter isaaru_spathi
+# TODO
 
 # -- Underwater --
-encounter
-# tidus attack sahagin_3
-# tidus attack phlegyas
+encounter via_purifico_underwater
 
-encounter
+encounter evrae_altana
 tidus elixir evrae_altana
 tidus elixir evrae_altana
 # tidus phoenix_down evrae_altana
 # tidus phoenix_down evrae_altana
 
 # -- Highbridge --
+encounter highbridge
+tidus attack ykt-63
+yuna attack ykt-63
 
-encounter
-# tidus attack ykt-63
-# yuna attack ykt-63
+encounter highbridge
 
-encounter
-tidus attack seymour_natus
-bahamut attack seymour_natus
+encounter seymour_natus
+# TODO
 
 # -- Calm Lands --
-encounter
 
-encounter
-bahamut attack defender_x
-bahamut attack defender_x
+encounter calm_lands_south_before_defender_x
+encounter calm_lands_south_before_defender_x
+encounter calm_lands_south_before_defender_x
+encounter calm_lands_south_before_defender_x
+encounter calm_lands_south_before_defender_x
+encounter calm_lands_south_before_defender_x
 
-# -- Sunken Cave --
-encounter
+encounter calm_lands_central_north_east
+encounter calm_lands_central_north_east
+encounter calm_lands_central_north_east
+encounter calm_lands_central_north_east
+
+encounter defender_x
+# TODO
+
+# -- Cavern of the Stolen Fayth --
+# encounter calm_lands_gorge
+# encounter cave_green_zone
+encounter cave_white_zone
 ixion attack ghost
 ixion attack ghost
 
 # -- Gagazet --
-encounter
-kimahri water_gem yenke_ronso
-kimahri water_gem yenke_ronso
-kimahri water_gem yenke_ronso
-kimahri water_gem yenke_ronso
-kimahri water_gem yenke_ronso
+encounter biran_&_yenke
+# TODO
 
-kimahri water_gem biran_ronso
-kimahri water_gem biran_ronso
-kimahri water_gem biran_ronso
-kimahri water_gem biran_ronso
-kimahri water_gem biran_ronso
+# encounter gagazet_mountain
 
-encounter
-tidus haste yuna
-yuna attack seymour_flux
-rikku silence_grenade monsters
-# rikku chaos_grenade
-bahamut attack seymour_flux
-yuna attack seymour_flux
-yuna attack seymour_flux
-tidus attack seymour_flux
-yuna attack seymour_flux
-yuna attack seymour_flux
+encounter seymour_flux
+# TODO
 
-encounter
-tidus armor_break sanctuary_keeper
-bahamut attack sanctuary_keeper
+# encounter gagazet_cave
 
-encounter
-bahamut attack spectral_keeper
-bahamut attack spectral_keeper
+# encounter gagazet_underwater
 
-encounter
-bahamut attack yunalesca
-bahamut attack yunalesca
-bahamut attack yunalesca
+encounter sanctuary_keeper
+# TODO
 
-encounter
-bahamut impulse left_fin
-bahamut impulse left_fin
+# -- Zanarkand --
+# encounter zanarkand_overpass
 
-encounter
-bahamut impulse right_fin
-bahamut impulse right_fin
+# encounter zanarkand_dome
 
-# Sin Core
-encounter
-# bahamut attack sinspawn_genais
-bahamut impulse sin_2
+encounter spectral_keeper
+# TODO
 
-# Overdrive Sin
-encounter
-bahamut impulse sin_3
-bahamut attack sin_3
-# bahamut attack sin_3
+encounter yunalesca
+# TODO
 
-encounter
-tidus armor_break seymour_omnis
-bahamut attack seymour_omnis
+# -- Sin --
+encounter left_fin
+# TODO
+
+encounter right_fin
+# TODO
+
+encounter sin_core
+# TODO
+
+encounter overdrive_sin
+# TODO
+
+# encounter inside_sin_front
+
+encounter seymour_omnis
+# TODO
+
+# encounter inside_sin_back
 
 # -- Nucleus --
 # encounter
 # encounter
 
-# Braska's Final Aeon
-encounter
-rikku armor_break braskas_final_aeon
-# rikku chaos_grenade
-bahamut attack braskas_final_aeon
+encounter bfa
+# TODO
 
-bahamut attack braskas_final_aeon
-bahamut attack braskas_final_aeon
+encounter possessed_valefor
+# TODO
 
-# Possessed Aeons' Luck is 1
+encounter possessed_ifrit
+# TODO
 
-encounter
-stat valefor luck 1
-yuna attack valefor_c
-# yuna quick_hit valefor_c
-# yuna spare_change valefor_c
+encounter possessed_ixion
+# TODO
 
-encounter
-stat ifrit luck 1
-yuna attack ifrit_c
-# yuna quick_hit ifrit_c
-# yuna spare_change ifrit_c
+encounter possessed_shiva
+# TODO
 
-encounter
-stat ixion luck 1
-yuna attack ixion_c
-# yuna quick_hit ixion_c
-# yuna spare_change ixion_c
-
-encounter
-stat shiva luck 1
-yuna attack shiva_c
-# yuna quick_hit shiva_c
-# yuna spare_change shiva_c
-
-encounter
+encounter possessed_bahamut
 stat bahamut luck 1
-yuna attack bahamut_c
-# yuna quick_hit bahamut_c
-# yuna spare_change bahamut_c
+# TODO
+
+encounter yu_yevon
+# TODO
