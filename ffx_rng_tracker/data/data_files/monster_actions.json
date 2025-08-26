@@ -1141,16 +1141,17 @@
         {"actions_file": 4, "action_id": 128, "name": "Attack D",         "target": "Lowest HP Character"}
     ],
     "m213": [
-        {"actions_file": 2, "action_id":  12, "name": "Eye Drops",   "target": "M2"              },
-        {"actions_file": 3, "action_id":  58, "name": "Shell",       "target": "M2"              },
-        {"actions_file": 3, "action_id":  59, "name": "Protect",     "target": "M2"              },
-        {"actions_file": 3, "action_id":  70, "name": "Blizzara",    "target": "Random Character"},
-        {"actions_file": 3, "action_id":  71, "name": "Thundara",    "target": "Random Character"},
-        {"actions_file": 4, "action_id":  15, "name": "Berserk M2",  "target": "M2"              },
-        {"actions_file": 4, "action_id":  15, "name": "Berserk M3",  "target": "M3"              },
-        {"actions_file": 4, "action_id":  16, "name": "Auto-Potion", "target": "Counter Self"    },
-        {"actions_file": 4, "action_id": 138, "name": "Summon M2",   "target": "M2"              },
-        {"actions_file": 4, "action_id": 138, "name": "Summon M3",   "target": "M3"              }
+        {"actions_file": 2, "action_id":  12, "name": "Eye Drops",      "target": "M2"              },
+        {"actions_file": 3, "action_id":  58, "name": "Shell",          "target": "M2"              },
+        {"actions_file": 3, "action_id":  59, "name": "Protect",        "target": "M2"              },
+        {"actions_file": 3, "action_id":  70, "name": "Blizzara",       "target": "Random Character"},
+        {"actions_file": 3, "action_id":  71, "name": "Thundara",       "target": "Random Character"},
+        {"actions_file": 4, "action_id":  15, "name": "Berserk M2",     "target": "M2"              },
+        {"actions_file": 4, "action_id":  15, "name": "Berserk M3",     "target": "M3"              },
+        {"actions_file": 4, "action_id":  16, "name": "Auto-Potion",    "target": "Counter Self"    },
+        {"actions_file": 4, "action_id":  16, "name": "Auto-Potion M2", "target": "M2"              },
+        {"actions_file": 4, "action_id": 138, "name": "Summon M2",      "target": "M2"              },
+        {"actions_file": 4, "action_id": 138, "name": "Summon M3",      "target": "M3"              }
     ],
     "m214": [
         {"actions_file": 3, "action_id":  66, "name": "Fire",   "target": "Random Character"         },
