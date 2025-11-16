@@ -1168,6 +1168,17 @@
             ],
             "danger_value": 40
         },
+        "via_purifico_underwater_jp": {
+            "name": "Via Purifico (Underwater) (JP)",
+            "encounters": [
+                {"monsters": ["phlegyas", "phlegyas"], "forced_condition": ""},
+                {"monsters": ["remora", "phlegyas", "remora"], "forced_condition": ""},
+                {"monsters": ["remora", "sahagin_3", "remora", "sahagin_3"], "forced_condition": ""},
+                {"monsters": ["sahagin_3", "octopus", "sahagin_3"], "forced_condition": ""},
+                {"monsters": ["octopus", "octopus"], "forced_condition": ""}
+            ],
+            "danger_value": 40
+        },
         "highbridge": {
             "name": "Highbridge",
             "encounters": [
