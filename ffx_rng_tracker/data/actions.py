@@ -427,6 +427,7 @@ def get_character_actions() -> dict[str, Action]:
 
     actions['taking_a_break...'].rank = 3
     actions['summon'].rank = 3
+    actions['bribe'].target = TargetType.SINGLE_MONSTER
     return actions
 
 

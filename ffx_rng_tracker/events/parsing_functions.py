@@ -1,12 +1,14 @@
 from enum import StrEnum
 from typing import Protocol
 
+from ..configs import Configs
 from ..data.actions import ACTIONS, YOJIMBO_ACTIONS
 from ..data.actor import Actor, MonsterActor
 from ..data.characters import s_lv_to_total_ap
 from ..data.constants import (SHORT_STATS_NAMES, Autoability, Character,
-                              Element, ElementalAffinity, EquipmentType, Item,
-                              KillType, MonsterSlot, Stat, TargetType)
+                              Element, ElementalAffinity, EquipmentType,
+                              GameVersion, Item, KillType, MonsterSlot, Stat,
+                              TargetType)
 from ..data.encounter_formations import BOSSES, SIMULATIONS, ZONES
 from ..data.equipment import Equipment
 from ..data.items import ITEM_PRICES
@@ -15,6 +17,7 @@ from ..errors import EventParsingError
 from ..gamestate import GameState
 from ..utils import search_strenum, stringify
 from .advance_rng import AdvanceRNG
+from .bribe import BribeAction, BribeDrop
 from .change_equipment import ChangeEquipment
 from .change_party import ChangeParty
 from .change_stat import ChangeStat
@@ -27,7 +30,7 @@ from .encounter_check import EncounterChecks
 from .end_encounter import EndEncounter
 from .escape import Escape
 from .heal_party import Heal
-from .kill import Bribe, Kill
+from .kill import Kill
 from .main import Event
 from .monster_action import MonsterAction
 from .monster_spawn import MonsterSpawn
@@ -252,13 +255,13 @@ def parse_bribe(gs: GameState,
                 user_name: str = '',
                 ap_characters_string: str = '',
                 *_,
-                ) -> Bribe:
+                ) -> BribeDrop:
     if not monster_name or not user_name:
         raise EventParsingError
     monster = parse_dict_key(monster_name, get_monsters_dict(), 'monster')
     user = parse_enum_member(user_name, Character, 'user')
     ap_characters = parse_party_members_initials(ap_characters_string)
-    return Bribe(gs, monster, user, ap_characters)
+    return BribeDrop(gs, monster, user, ap_characters)
 
 
 def parse_death(gs: GameState, character_name: str = 'unknown', *_) -> Death:
@@ -333,7 +336,7 @@ def parse_action(gs: GameState,
                  od_time_remaining: str = '',
                  od_n_of_hits: str = '',
                  *_,
-                 ) -> CharacterAction | Escape:
+                 ) -> CharacterAction | Escape | BribeAction:
     if not character_name or not action_name:
         raise EventParsingError
     character = parse_enum_member(character_name, Character, 'character')
@@ -400,6 +403,14 @@ def parse_action(gs: GameState,
             target = gs.characters[char]
         case _:
             target = action.target
+
+    if action_name == 'bribe':
+        if Configs.game_version is GameVersion.PS2JP:
+            raise EventParsingError('bribe is not implemented in ps2 jp')
+        gil = parse_amount(od_time_remaining, 0, 'gil')
+        if gil < 0:
+            raise EventParsingError('gil must be greater or equal to 0')
+        return BribeAction(gs, actor, target, gil)
 
     match action.overdrive_user:
         case Character.TIDUS | Character.AURON | Character.WAKKA:
@@ -919,6 +930,7 @@ USAGE: dict[ParsingFunction, list[str]] = {
         'action [character] [action (aoe od)] (time remaining)',
         'action [character] attack_reels (time remaining) (# of hits)',
         'action [character] [fury] (# of hits)',
+        'action [character] bribe [gil amount]',
     ],
     parse_stat_update: [
         'stat [character/monster slot] (stat) [(+/-)amount]',

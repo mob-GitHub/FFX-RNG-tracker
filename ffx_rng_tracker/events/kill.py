@@ -165,17 +165,3 @@ class Kill(Event):
             return None
         self.gamestate.equipment_drops += 1
         return self.gamestate.equipment_drops
-
-
-@dataclass
-class Bribe(Kill):
-
-    def __post_init__(self) -> None:
-        self.kill_type = KillType.NORMAL
-        super().__post_init__()
-
-    def _get_item_1(self) -> ItemDrop | None:
-        return self.monster.bribe.item
-
-    def _get_item_2(self) -> None:
-        return

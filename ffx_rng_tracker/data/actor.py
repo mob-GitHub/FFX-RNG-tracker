@@ -358,6 +358,7 @@ class MonsterActor:
         self.provoker: Actor | None = None
         self.last_attacker: Actor | None = None
         self.last_targets.clear()
+        self._bribe_gil_spent = 0
 
     def set_stat(self, stat: Stat, value: int) -> None:
         """Sets the stat to the value, clamping to the
@@ -432,3 +433,11 @@ class MonsterActor:
     @ctb.setter
     def ctb(self, value: int) -> None:
         self._ctb = max(0, value)
+
+    @property
+    def bribe_gil_spent(self) -> int:
+        return self._bribe_gil_spent
+
+    @bribe_gil_spent.setter
+    def bribe_gil_spent(self, value: int) -> None:
+        self._bribe_gil_spent = min(max(0, value), 999_999_999)
