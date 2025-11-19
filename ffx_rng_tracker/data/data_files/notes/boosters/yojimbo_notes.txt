@@ -6,17 +6,16 @@ zanmato sanctuary_keeper overdrive
 
 zanmato yunalesca overdrive
 zanmato yunalesca overdrive
-# yunalesca inflicts curse
-# with her first attack
-# in third phase
+/* yunalesca inflicts curse with her
+first attack in third phase */
 zanmato yunalesca
 
 zanmato left_fin overdrive
 
 zanmato right_fin overdrive
 
-# not sure if both core and genais
-# die from the first zanmato
+/* not sure if both core and genais die
+from the first zanmato */
 zanmato sinspawn_genais overdrive
 # sin core
 zanmato sin_2 overdrive

@@ -38,12 +38,11 @@ class ActionsTracker(TrackerUI):
         return parsing_functions
 
     def get_usage(self) -> str:
-        usage = super().get_usage()
-        usage += ('\n'
-                  '# Stats:\n'
-                  '#     hp, mp, strength, defense, magic,\n'
-                  '#     magic_defense, agility, luck,\n'
-                  '#     evasion, accuracy, ctb')
+        usage = super().get_usage()[:-2]
+        usage += ('Stats:\n'
+                  '    hp mp strength defense magic magic_defense\n'
+                  '    agility luck evasion accuracy ctb\n'
+                  '*/')
         return usage
 
     def edit_input(self, input_text: str) -> str:

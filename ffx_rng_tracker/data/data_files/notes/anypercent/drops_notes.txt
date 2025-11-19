@@ -33,16 +33,18 @@ steal klikk 1
 klikk tidus
 
 # Chain encounter
-# 2 Piranhas encounter
+# /* 2 Piranhas encounter
 steal piranha
 piranha tidus
 steal piranha_2
 piranha_2 tidus
+# */
 
-# Single Piranha encounter
-# steal piranha_3
-# steal piranha_3 1
-# piranha_3 tidus
+/* Single Piranha encounter
+steal piranha_3
+steal piranha_3 1
+piranha_3 tidus
+# */
 
 # Forced fight
 steal piranha_3
@@ -304,26 +306,29 @@ fire_rifle kimahri
 fire_rifle kimahri
 
 # Fight 5
-# Using AoE throwables
+# /* Using AoE throwables
 warrior_monk rikku
 warrior_monk rikku
 rifle rikku
 rifle rikku
 yat-99 rikku
+# */
 
-# Using Sleeping Powders
-# warrior_monk rikku
-# yat-99 rikku
-# warrior_monk rikku
-# rifle rikku
-# rifle rikku
+/* Using Sleeping Powders
+warrior_monk rikku
+yat-99 rikku
+warrior_monk rikku
+rifle rikku
+rifle rikku
+# */
 
-# Using Bomb Cores
-# warrior_monk tidus
-# rifle tidus
-# warrior_monk tidus
-# rifle tidus
-# yat-99 kimahri
+/* Using Bomb Cores
+warrior_monk tidus
+rifle tidus
+warrior_monk tidus
+rifle tidus
+yat-99 kimahri
+# */
 
 # -- Via Purifico --
 party ya

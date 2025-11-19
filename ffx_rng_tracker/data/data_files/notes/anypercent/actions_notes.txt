@@ -640,23 +640,26 @@ rikku sleeping_powder monsters
 kimahri silence_grenade monsters
 
 encounter bevelle_guards_5
-# Using AoE throwables
+# /* Using AoE throwables
 tidus haste rikku
 rikku silence_grenade monsters
 rikku silence_grenade monsters
 rikku bomb_core m2
+# */
 
-# Using Sleeping Powders
-# tidus haste rikku
-# rikku sleeping_powder monsters
-# rikku bomb_core m2
-# rikku sleeping_powder monsters
+/* Using Sleeping Powders
+tidus haste rikku
+rikku sleeping_powder monsters
+rikku bomb_core m2
+rikku sleeping_powder monsters
+# */
 
-# Using Bomb Cores
-# tidus attack m1
-# tidus attack m3
-# rikku bomb_core m2
-# kimahri bomb_core m2
+/* Using Bomb Cores
+tidus attack m1
+tidus attack m3
+rikku bomb_core m2
+kimahri bomb_core m2
+# */
 
 # -- Via Purifico --
 /macro via purifico grid

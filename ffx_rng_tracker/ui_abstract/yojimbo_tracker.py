@@ -22,13 +22,11 @@ class YojimboTracker(TrackerUI):
         return parsing_functions
 
     def get_usage(self) -> str:
-        usage = super().get_usage()
-        usage += ('\n'
-                  '# Yojimbo actions:\n'
-                  '#     daigoro, kozuka, wakizashi_st,\n'
-                  '#     wakizashi_mt, zanmato,\n'
-                  '#     dismiss, autodismiss,\n'
-                  '#     first_turn_dismiss')
+        usage = super().get_usage()[:-2]
+        usage += ('Yojimbo actions:\n'
+                  '    daigoro kozuka wakizashi_st wakizashi_mt zanmato\n'
+                  '    dismiss autodismiss first_turn_dismiss\n'
+                  '*/')
         return usage
 
     def edit_input(self, input_text: str) -> str:

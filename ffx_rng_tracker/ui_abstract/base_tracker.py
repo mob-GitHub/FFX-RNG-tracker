@@ -58,7 +58,7 @@ class TrackerUI(ABC):
 
     def get_usage(self) -> str:
         usage_lines = [
-            '# Usage:',
+            'Usage:',
             '/usage',
             '///',
             '/nopadding',
@@ -69,7 +69,7 @@ class TrackerUI(ABC):
             if function is parse_roll:
                 continue
             usage_lines.extend(USAGE.get(function, []))
-        return '\n#     '.join(usage_lines)
+        return f'/*\n{'\n    '.join(usage_lines)}\n*/'
 
     def change_seed(self, seed: int, reload_notes: bool) -> None:
         self.parser.gamestate.seed = seed
@@ -144,7 +144,7 @@ class TrackerUI(ABC):
             self.previous_edited_input = edited_input
             self.parser.gamestate.reset()
             output = self.parser.parse_to_string(edited_input)
-            padding = 'Command: /nopadding\n' not in output
+            padding = '\nCommand: /nopadding\n' not in f'\n{output}\n'
             edited_output = self.edit_output(output, padding)
             self.previous_edited_output = edited_output
         self.output_widget.print_output(edited_output)

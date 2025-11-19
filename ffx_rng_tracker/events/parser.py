@@ -30,7 +30,16 @@ class EventParser:
 
         lines = text.splitlines()
         events = []
+        multiline_comment = False
         for i, line in enumerate(lines):
+            if line.startswith('/*'):
+                multiline_comment = True
+            if multiline_comment:
+                if line.endswith('*/'):
+                    multiline_comment = False
+                events.append(Comment(self.gamestate, f'# {line}'))
+                continue
+
             if line == '/repeat' or line.startswith('/repeat '):
                 _, *rest = line.split()
                 try:
@@ -44,6 +53,7 @@ class EventParser:
                 for _ in range(times):
                     for j in range(min(i, n_of_lines)):
                         lines.insert(i + 1, lines[i - 1 - j])
+
             event = self.parse_line(line)
             events.append(event)
         return events
@@ -51,13 +61,13 @@ class EventParser:
     def parse_line(self, line: str) -> Event:
         """Parse the input line and returns an event."""
         words = line.lower().split()
-        if not words or words[0].startswith('#'):
+        if not words or line.startswith('#'):
             return Comment(self.gamestate, line)
-        elif words[0] == '/macro':
+        elif line == '/macro' or line.startswith('/macro '):
             macro_names = ', '.join([f'"{m}"' for m in self.macros])
             text = f'Error: Possible macros are {macro_names}'
             return Comment(self.gamestate, text)
-        elif words[0].startswith('/'):
+        elif line.startswith('/'):
             return Comment(self.gamestate, f'Command: {line}')
         event_name, *params = words
         try:
