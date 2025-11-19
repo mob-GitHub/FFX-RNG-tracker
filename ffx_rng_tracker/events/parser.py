@@ -42,7 +42,7 @@ class EventParser:
                 except (IndexError, ValueError):
                     n_of_lines = 1
                 for _ in range(times):
-                    for j in range(n_of_lines):
+                    for j in range(min(i, n_of_lines)):
                         lines.insert(i + 1, lines[i - 1 - j])
             event = self.parse_line(line)
             events.append(event)
