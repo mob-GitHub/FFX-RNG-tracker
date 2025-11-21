@@ -32,7 +32,11 @@ class MonsterDataViewer:
         self.monster_selection_widget.register_callback(self.callback)
         self.output_widget.register_tag(
             '#search bar',
-            UITagConfigs(REGEX_NEVER_MATCH, background='#ffff00'),
+            UITagConfigs(
+                regex_pattern=REGEX_NEVER_MATCH,
+                foreground='#000000',
+                background='#ffff00',
+                ),
             )
         self.search_bar.register_callback(self.search_callback)
 
