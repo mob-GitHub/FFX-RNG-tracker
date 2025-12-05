@@ -2,7 +2,7 @@ from ..errors import EventParsingError
 from ..gamestate import GameState
 from .comment import Comment
 from .main import Event
-from .parsing_functions import USAGE, ParsingFunction
+from .parsing_functions import USAGE, ParsingFunction, parse_roll
 
 
 class EventParser:
@@ -12,6 +12,30 @@ class EventParser:
         self.gamestate = gamestate
         self.parsing_functions: dict[str, ParsingFunction] = {}
         self.macros: dict[str, str] = {}
+        self.build_usage_text()
+
+    def build_usage_text(self) -> None:
+        usage_lines = [
+            '# /*',
+            'Commands:',
+            '   "#" is used to ignore a single line',
+            '   "###" is used to start and end ignored blocks',
+            '   "/usage" shows this text',
+            '   "///" will hide everything above it from the output',
+            '   "/nopadding" disables automatic padding of the output',
+            '   "/macro [macro name]" will be replaced with the '
+            'corresponding macro',
+            '   "/repeat (# of times) (# of lines)" repeats previous '
+            'lines the specified amount of times',
+            'Events:'
+            ]
+        usage_lines.extend([f'    {line}'
+                            for function in self.parsing_functions.values()
+                            for line in USAGE.get(function, [])
+                            if function is not parse_roll
+                            ])
+        usage_lines.append('*/')
+        self.usage = '\n# '.join(usage_lines)
 
     def apply_macros(self, text: str) -> str:
         """Replace keys found in the self.macros dict with their values."""
@@ -63,6 +87,8 @@ class EventParser:
         words = line.lower().split()
         if not words or line.startswith('#'):
             return Comment(self.gamestate, line)
+        elif line == '/usage' or line.startswith('/usage '):
+            return Comment(self.gamestate, self.usage)
         elif line == '/macro' or line.startswith('/macro '):
             macro_names = ', '.join([f'"{m}"' for m in self.macros])
             text = f'Error: Possible macros are {macro_names}'
@@ -74,7 +100,7 @@ class EventParser:
             parsing_func = self.parsing_functions[event_name]
         except KeyError:
             return Comment(
-                self.gamestate, f'Error: No event called "{event_name}"')
+                self.gamestate, f'Error: Impossible to parse "{line}"')
         try:
             return parsing_func(self.gamestate, *params)
         except EventParsingError as error:

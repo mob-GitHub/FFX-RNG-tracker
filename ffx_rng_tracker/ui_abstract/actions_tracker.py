@@ -17,6 +17,16 @@ class ActionsTracker(TrackerUI):
     name = UIWidget.ACTIONS
     notes_file = 'actions_notes.txt'
 
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.parser.usage = self.parser.usage[:-2]
+        self.parser.usage += '\n# '.join([
+            'Stats:',
+            '    hp mp strength defense magic magic_defense',
+            '    agility luck evasion accuracy ctb',
+            '*/'
+            ])
+
     def get_parsing_functions(self) -> list[ParsingFunction]:
         parsing_functions = [
             parse_roll,
@@ -37,14 +47,6 @@ class ActionsTracker(TrackerUI):
         ]
         return parsing_functions
 
-    def get_usage(self) -> str:
-        usage = super().get_usage()[:-2]
-        usage += ('Stats:\n'
-                  '    hp mp strength defense magic magic_defense\n'
-                  '    agility luck evasion accuracy ctb\n'
-                  '*/')
-        return usage
-
     def edit_input(self, input_text: str) -> str:
         character_names = {stringify(c) for c in Character}
         monster_names = (set(get_monsters_dict())
@@ -59,8 +61,6 @@ class ActionsTracker(TrackerUI):
                     line = f'monsteraction {line}'
                 case [equip_type, *_] if equip_type in ('weapon', 'armor'):
                     line = f'equip {line}'
-                case ['/usage']:
-                    line = self.usage
                 case _:
                     continue
             input_lines[index] = line

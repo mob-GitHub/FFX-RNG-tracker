@@ -32,8 +32,6 @@ class DropsTracker(TrackerUI):
             match line.lower().split():
                 case [monster, *_] if monster in monster_names:
                     line = f'kill {line}'
-                case ['/usage']:
-                    line = self.usage
                 case _:
                     continue
             input_lines[index] = line

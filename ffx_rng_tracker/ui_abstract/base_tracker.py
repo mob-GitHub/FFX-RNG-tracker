@@ -27,12 +27,13 @@ class TrackerUI(ABC):
     def __post_init__(self) -> None:
         self.previous_edited_input = ''
         self.previous_edited_output = ''
-        self.usage = self.get_usage()
 
         for function in self.get_parsing_functions():
             for usage_string in USAGE[function]:
                 command = usage_string.split()[0]
                 self.parser.parsing_functions[command] = function
+
+        self.parser.build_usage_text()
         self.parser.macros.update((k, self.edit_input(v))
                                   for k, v in self.configs.macros.items())
 
@@ -59,21 +60,6 @@ class TrackerUI(ABC):
     @abstractmethod
     def get_parsing_functions(self) -> list[ParsingFunction]:
         """Returns a list of parsing functions."""
-
-    def get_usage(self) -> str:
-        usage_lines = [
-            'Usage:',
-            '/usage',
-            '///',
-            '/nopadding',
-            '/macro [macro name]',
-            '/repeat (# of times) (# of lines)',
-            ]
-        for function in self.get_parsing_functions():
-            if function is parse_roll:
-                continue
-            usage_lines.extend(USAGE.get(function, []))
-        return f'/*\n{'\n    '.join(usage_lines)}\n*/'
 
     def change_seed(self, seed: int, reload_notes: bool) -> None:
         self.parser.gamestate.seed = seed
