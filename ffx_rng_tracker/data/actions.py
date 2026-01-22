@@ -425,8 +425,6 @@ def get_character_actions() -> dict[str, Action]:
     auto_x_potion.target = TargetType.COUNTER_SELF
     actions['auto_x-potion'] = auto_x_potion
 
-    actions['taking_a_break...'].rank = 3
-    actions['summon'].rank = 3
     actions['bribe'].target = TargetType.SINGLE_MONSTER
     return actions
 

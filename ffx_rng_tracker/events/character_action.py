@@ -575,7 +575,10 @@ class CharacterAction(Event):
         return possible_targets[target_index]
 
     def _get_ctb(self) -> int:
-        rank = self.action.rank
+        if self.action.rank:
+            rank = self.action.rank
+        else:
+            rank = 3
         ctb = self.user.base_ctb * rank
         if Status.HASTE in self.user.statuses:
             ctb = ctb // 2

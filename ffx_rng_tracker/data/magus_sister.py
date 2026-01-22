@@ -266,7 +266,12 @@ class MagusSister(ABC):
             self.actor.statuses.pop(Status.DEATH)
             self.actor.current_hp = 1
         self.actor.ctb = self.actor.base_ctb * 3
-        self.magus_last_command_id = None
+        # TODO
+        # last command id is cleared on the first turn after resummoning
+        # but if the sister dies before getting the first turn it is never
+        # cleared, allowing the use of one more time right after a resummon
+        # for now never clear it
+        # self.magus_last_command_id = None
 
     def autolife(self, one_more_time: bool = False) -> ActionGenerator:
         # TODO
@@ -326,7 +331,7 @@ class Cindy(MagusSister):
     def on_dismiss(self) -> None:
         super().on_dismiss()
         self.resolve_pending_motivation_and_overdrive()
-        self.actor.ctb = 0
+        # self.actor.ctb = 0
 
     def get_command_list(self) -> dict[str, MagusCommand]:
         commands: dict[str, MagusCommand] = {}
