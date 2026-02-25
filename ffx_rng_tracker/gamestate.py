@@ -170,6 +170,8 @@ class GameState:
         # some point
         self.process_end_of_encounter()
 
+        self.setup_autostatuses()
+
     def process_end_of_encounter(self) -> None:
         self.ctb_since_last_action = 0
         for actor in self.characters.values():
